@@ -67,43 +67,62 @@
   }
   .btn-secondary:hover { border-color: rgba(255,255,255,0.35); }
 
-  /* ── APPROACH (dark) ── */
-  .approach { background: var(--dark); padding: 120px 24px; }
-  .approach-inner { max-width: 960px; margin: 0 auto; }
-  
-  .approach h2 {
-    font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em;
-    line-height: 1.15; max-width: 600px; margin-bottom: 48px;
+  /* ── PROBLEM (dark) ── */
+  .problem {
+    background: var(--dark); padding: 140px 24px; text-align: center;
   }
-  .approach h2 em { font-style: normal; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .problem-inner { max-width: 720px; margin: 0 auto; }
   
-  .approach-body { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-bottom: 72px; }
-  .approach-body p { font-size: 1.0625rem; color: var(--text-light); line-height: 1.8; }
+  .problem-intro {
+    font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.25; margin-bottom: 64px;
+  }
 
-  /* Outcome pillars */
-  .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.06); }
-  .outcome-item { text-align: center; }
-  .outcome-item .label { font-size: clamp(1rem, 1.5vw, 1.25rem); font-weight: 700; margin-bottom: 8px; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .outcome-item .desc { font-size: 0.875rem; color: var(--text-light); line-height: 1.6; }
+  .problem-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
+  .problem-list li {
+    list-style: none; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 600; color: var(--text-light);
+    letter-spacing: -0.01em;
+  }
 
-  /* ── WORK (dark) ── */
-  #work { background: var(--dark-2); padding: 120px 24px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
-  .work-inner { max-width: 1100px; margin: 0 auto; }
+  .problem-turn {
+    font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 500; line-height: 1.6; color: var(--text-light);
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 48px; max-width: 520px; margin: 0 auto;
+  }
+
+  /* ── REFAME (gradient accent block) ── */
+  .reframe {
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 40%, #FF9A8B 100%);
+    padding: 120px 24px; text-align: center; position: relative;
+  }
+  .reframe-inner { max-width: 720px; margin: 0 auto; color: #2a1f2e; }
+  .reframe-inner p { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.35; }
+
+  /* ── BELIEF (dark) ── */
+  .belief {
+    background: var(--dark); padding: 140px 24px; text-align: center;
+  }
+  .belief-inner { max-width: 640px; margin: 0 auto; }
+
+  .belief-text { font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 500; line-height: 2; color: var(--text-light); }
+  .belief-line { display: block; }
+
+  /* ── PROOF / CASE STUDIES (dark-2) ── */
+  .proof { background: var(--dark-2); padding: 120px 24px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .proof-inner { max-width: 1100px; margin: 0 auto; }
+
+  .proof-header { text-align: center; margin-bottom: 64px; }
+  .proof-header h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+
+  .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   
-  .work-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
-  .work-header h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; }
-  .work-header p { color: var(--text-light); font-size: 0.9375rem; max-width: 400px; line-height: 1.6; }
-
-  .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  
-  .work-card {
+  .proof-card {
     background: var(--dark); border: 1px solid rgba(255,255,255,0.04);
     border-radius: 12px; overflow: hidden; transition: all 0.3s; display: flex; flex-direction: column;
   }
-  .work-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .proof-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-4px); }
   
-  .work-thumb { height: 220px; position: relative; overflow: hidden; }
-  .work-thumb-inner {
+  .proof-thumb { height: 220px; position: relative; overflow: hidden; }
+  .proof-thumb-inner {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     font-size: 2.5rem; font-weight: 800; color: rgba(255,255,255,0.1); letter-spacing: -0.02em;
   }
@@ -113,27 +132,25 @@
   .thumb-lids { background-color: #1a2a1a; }
   .thumb-broadway { background-color: #2d1a2a; }
 
-  .work-body { padding: 28px 32px; flex: 1; display: flex; flex-direction: column; }
-  .work-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-  .work-body h3 { font-size: 1.0625rem; font-weight: 650; margin-bottom: 8px; letter-spacing: -0.01em; }
-  .work-body p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; }
+  .proof-body { padding: 28px 32px; flex: 1; display: flex; flex-direction: column; }
+  .proof-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .proof-body h3 { font-size: 1.0625rem; font-weight: 650; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .proof-body p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; }
 
-  /* ── ABOUT (gradient accent block) ── */
-  #about {
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 40%, #FF9A8B 100%);
-    padding: 120px 24px; text-align: center; position: relative;
-  }
-  .about-inner { max-width: 640px; margin: 0 auto; color: #2a1f2e; }
-  .about-inner h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 32px; }
-  .about-inner p { font-size: 1.125rem; line-height: 1.9; opacity: 0.7; margin-bottom: 20px; text-align: center; }
-  .about-inner p:last-child { margin-bottom: 0; font-weight: 600; opacity: 1; }
+  /* ── WHY US (dark) ── */
+  .why-us { background: var(--dark); padding: 140px 24px; }
+  .why-us-inner { max-width: 960px; margin: 0 auto; }
+  
+  .why-us-body { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .why-us-body p { font-size: 1.0625rem; color: var(--text-light); line-height: 1.8; }
 
-  /* ── CONTACT (dark) ── */
-  #contact { background: var(--dark-3); padding: 120px 24px; text-align: center; }
-  .contact-inner { max-width: 520px; margin: 0 auto; }
-  .contact-inner h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.2; }
-  .contact-inner h2 em { font-style: normal; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .contact-inner > p { color: var(--text-light); font-size: 1.0625rem; line-height: 1.7; margin-bottom: 40px; }
+  /* ── CTA (dark-3) ── */
+  .cta-section { background: var(--dark-3); padding: 140px 24px; text-align: center; }
+  .cta-inner { max-width: 520px; margin: 0 auto; }
+
+  .cta-inner h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.2; }
+  .cta-inner h2 em { font-style: normal; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .cta-inner > p { color: var(--text-light); font-size: 1.0625rem; line-height: 1.7; margin-bottom: 40px; }
 
   .contact-form { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
   .form-field input, .form-field textarea {
@@ -171,12 +188,10 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .approach-body { grid-template-columns: 1fr; gap: 40px; }
-    .work-grid { grid-template-columns: 1fr; }
+    .why-us-body, .proof-grid { grid-template-columns: 1fr; gap: 40px; }
     section { padding: 80px 20px !important; }
   }
   @media (max-width: 600px) {
-    .outcomes-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .hero-value h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
   }
 
@@ -193,81 +208,88 @@
   <div class="hero-content fade-up">
     <div class="hero-logo"><img src="Logo/Logo High Res/Cropped-High/Logo-w-crop-high.png" alt="Vaguely Sharp"></div>
     <div class="hero-value">
-      <h1>Most brands don't have a content problem.<br><em>They have a format problem.</em></h1>
-      <p>We help brands discover the creative formats that audiences actually want to return for. Audit. Prototype. Validate. Real data, not hunches.</p>
+      <h1>Discover your brand's <em>native language</em> on social.</h1>
+      <p>Vaguely Sharp helps brands identify and develop repeatable content formats to grow and engage your audience.</p>
       <div class="hero-cta-group">
-        <a href="#contact" class="btn-primary">Start a Conversation →</a>
-        <a href="#work" class="btn-secondary">See Our Work</a>
+        <a href="#contact" class="btn-primary">Let's Get Started →</a>
+        <a href="#proof" class="btn-secondary">See Our Work</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- APPROACH -->
-<section class="approach" id="approach">
-  <div class="approach-inner fade-up">
-    <h2>The gap isn't effort — it's <em>format.</em></h2>
-    <div class="approach-body">
-      <p>Brands produce more content than ever and audiences watch less. Without formats people actively return for, every piece of content burns its own bridge. You need audience retention, not attention theater.</p>
-      <p>We audit what your audience actually responds to. Design original creative concepts built around culture — not trends. Prototype formats that test real engagement. Hand you back winning concepts and a roadmap for what comes next.</p>
-    </div>
-    <div class="outcomes-grid fade-up stagger-1">
-      <div class="outcome-item">
-        <div class="label">Audience retention</div>
-        <div class="desc">Formats that compound attention instead of burning it. Audiences return when formats feel like they can't live without.</div>
-      </div>
-      <div class="outcome-item">
-        <div class="label">Culture-first creative</div>
-        <div class="desc">Concepts built from cultural behavior, not brand wants. What matters to the room, not just what matters to your team.</div>
-      </div>
-      <div class="outcome-item">
-        <div class="label">Proven roadmaps</div>
-        <div class="desc">Winning concepts backed by real engagement data — not hunches. A clear path from pilot to what scales.</div>
-      </div>
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-inner fade-up">
+    <p class="problem-intro">Brands are producing more than ever.</p>
+    <ul class="problem-list">
+      <li>More posts.</li>
+      <li>More creators.</li>
+      <li>More formats.</li>
+    </ul>
+    <p class="problem-turn">But more content does not answer the question that matters:<br><strong style="color:var(--white);">What is worth repeating?</strong></p>
+  </div>
+</section>
+
+<!-- REFAME -->
+<section class="reframe" id="reframe">
+  <div class="reframe-inner fade-up">
+    <p>Most brands do not have a content problem.<br>They have a discovery problem.</p>
+  </div>
+</section>
+
+<!-- BELIEF -->
+<section class="belief" id="belief">
+  <div class="belief-inner fade-up">
+    <div class="belief-text">
+      <span class="belief-line">The strongest content is not just better produced.</span>
+      <span class="belief-line">It has a repeatable engine underneath it.</span>
+      <span class="belief-line">A reason people recognize it.</span>
+      <span class="belief-line">A reason they return to it.</span>
+      <span class="belief-line">A reason it can become more than one post, one campaign, or one moment.</span>
     </div>
   </div>
 </section>
 
-<!-- WORK -->
-<section id="work">
-  <div class="work-inner">
-    <div class="work-header fade-up">
-      <h2>Our work.</h2>
-      <p>Proof across format — original series, brand campaigns, and live productions that people actually talk about.</p>
+<!-- PROOF -->
+<section class="proof" id="proof">
+  <div class="proof-inner">
+    <div class="proof-header fade-up">
+      <h2>Case Studies</h2>
     </div>
 
-    <div class="work-grid">
-      <div class="work-card fade-up stagger-1">
-        <div class="work-thumb"><div class="work-thumb-inner thumb-series">Decon</div></div>
-        <div class="work-body">
-          <span class="work-tag">Original Digital Series</span>
+    <div class="proof-grid">
+      <div class="proof-card fade-up stagger-1">
+        <div class="proof-thumb"><div class="proof-thumb-inner thumb-series">Decon</div></div>
+        <div class="proof-body">
+          <span class="proof-tag">Original Digital Series</span>
           <h3>Deconstructed with Frosty Preme</h3>
           <p>Vaguely Sharp's first original series — a repeatable format built from the ground up.</p>
         </div>
       </div>
 
-      <div class="work-card fade-up stagger-2">
-        <div class="work-thumb"><div class="work-thumb-inner thumb-layton">L</div></div>
-        <div class="work-body">
-          <span class="work-tag">Brand Campaign</span>
+      <div class="proof-card fade-up stagger-2">
+        <div class="proof-thumb"><div class="proof-thumb-inner thumb-layton">L</div></div>
+        <div class="proof-body">
+          <span class="proof-tag">Brand Campaign</span>
           <h3>Layton</h3>
           <p>Creative architecture for audience growth — formats that compound over time.</p>
         </div>
       </div>
 
-      <div class="work-card fade-up stagger-3">
-        <div class="work-thumb"><div class="work-thumb-inner thumb-lids">LIDS</div></div>
-        <div class="work-body">
-          <span class="work-tag">Brand Partnership</span>
+      <div class="proof-card fade-up stagger-3">
+        <div class="proof-thumb"><div class="proof-thumb-inner thumb-lids">LIDS</div></div>
+        <div class="proof-body">
+          <span class="proof-tag">Brand Partnership</span>
           <h3>Lids</h3>
           <p>Platform-native content formats built from brand identity.</p>
         </div>
       </div>
 
-      <div class="work-card fade-up stagger-4">
-        <div class="work-thumb"><div class="work-thumb-inner thumb-broadway" style="font-size:1.5rem; letter-spacing:-0.05em;">✦ Sold Out</div></div>
-        <div class="work-body">
-          <span class="work-tag">Live Production</span>
+      <div class="proof-card fade-up stagger-4">
+        <div class="proof-thumb"><div class="proof-thumb-inner thumb-broadway" style="font-size:1.5rem; letter-spacing:-0.05em;">✦ Sold Out</div></div>
+        <div class="proof-body">
+          <span class="proof-tag">Live Production</span>
           <h3>Off-Broadway — Fall 2025</h3>
           <p>Sold-out run we produced. Proof that format thinking extends into live experience.</p>
         </div>
@@ -278,20 +300,23 @@
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-inner fade-up">
-    <h2>About us.</h2>
-    <p>The cultural conversation has shifted to social platforms in new formats — and most brands haven't caught up. We see the gap between what brands want to say and what audiences actually watch.</p>
-    <p>We built Vaguely Sharp to close it. One Sprint at a time.</p>
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="why-us-inner fade-up">
+    <div class="why-us-body">
+      <p>We are not a legacy agency applying an old model to new platforms.</p>
+      <div>
+        <p style="margin-bottom:24px;">We are building in the same environment your brand has to win in.</p>
+        <p>We also develop our own original media projects because we believe the best content companies learn by publishing, not just by advising.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner fade-up">
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner fade-up">
     <h2>Let's get started.<br><em>Connect with us:</em></h2>
-    <p>A Sprint is a focused, low-risk way to discover the creative concepts your audience will actually return for.</p>
 
     <form class="contact-form" onsubmit="event.preventDefault();">
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
