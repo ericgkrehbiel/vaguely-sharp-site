@@ -83,7 +83,7 @@
     line-height: 1.25; margin-bottom: 64px;
   }
 
-  .problem-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
+  .problem-list { display: flex; flex-direction: row; justify-content: center; gap: 48px; margin-bottom: 64px; }
   .problem-list li {
     list-style: none; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 600; color: var(--text-light);
     letter-spacing: -0.01em;
@@ -117,6 +117,38 @@
   .proof { background: var(--dark-2); padding: 120px 24px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
   .proof-inner { max-width: 1100px; margin: 0 auto; }
 
+
+  .proof-clients {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .proof-clients p {
+    font-size: 0.975rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 32px;
+  }
+  .clients-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+    flex-wrap: wrap;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .clients-logos img {
+    height: 38px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+    transition: all 0.3s;
+  }
+  .clients-logos img:hover {
+    opacity: 0.8;
+  }
   .proof-header { text-align: center; margin-bottom: 64px; }
   .proof-header h2 {
     font-family: 'Michroma', sans-serif;
@@ -209,6 +241,10 @@
     .why-us-body, .proof-grid { grid-template-columns: 1fr; gap: 40px; }
     section { padding: 80px 20px !important; }
   }
+
+  @media (max-width: 768px) {
+    .problem-list { flex-direction: column; gap: 24px; }
+  }
   @media (max-width: 600px) {
     .hero-value h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
   }
@@ -272,10 +308,19 @@
 <!-- PROOF -->
 <section class="proof" id="proof">
   <div class="proof-inner">
+
+    <div class="proof-clients fade-up">
+      <p>We've helped teams at</p>
+      <div class="clients-logos">
+        <img src="Homepage Assets/Client Logos/lids logo black.png" alt="Lids">
+        <img src="Homepage Assets/Client Logos/puma logo white.png" alt="Puma">
+        <img src="Homepage Assets/Client Logos/madewell logo white.png" alt="Madewell">
+      </div>
+    </div>
+
     <div class="proof-header fade-up">
       <h2>Case Studies</h2>
     </div>
-
     <div class="proof-grid">
       <div class="proof-card fade-up stagger-1">
         <div class="proof-thumb"><div class="proof-thumb-inner thumb-series">Decon</div></div>
