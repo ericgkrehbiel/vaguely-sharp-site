@@ -295,6 +295,7 @@
     box-shadow: 0 24px 60px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.03) inset;
   }
   .case-video,
+  .case-embed,
   .case-poster,
   .case-video-placeholder {
     position: absolute;
@@ -304,6 +305,10 @@
   }
   .case-video {
     object-fit: cover;
+    background: #050506;
+  }
+  .case-embed {
+    border: 0;
     background: #050506;
   }
   .case-poster {
@@ -337,6 +342,7 @@
     border-radius: 7px;
   }
   .case-video[hidden],
+  .case-embed[hidden],
   .case-poster[hidden],
   .case-video-placeholder[hidden] {
     display: none !important;
@@ -634,6 +640,7 @@
     <div class="case-video-panel">
       <div class="case-video-frame">
         <video class="case-video" data-case-video controls muted loop playsinline preload="metadata" hidden></video>
+        <iframe class="case-embed" data-case-embed title="Case study video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
         <img class="case-poster" data-case-poster alt="" hidden>
         <div class="case-video-placeholder" data-case-video-placeholder>9:16 video placeholder</div>
       </div>
@@ -715,7 +722,7 @@
       title: 'Deconstructed with Frosty Preme',
       blurb: 'An original series hosted by Frosty Preme exploring the life and work of prominent designers in the NY custom fitted community.',
       videoSrc: '',
-      posterSrc: 'Homepage Assets/Case Study Videos/Deconstructed Placeholder.png',
+      posterSrc: 'Homepage Assets/Deconstructed Placeholder.png',
       metrics: [
         { value: '500+ assets', label: 'Across Season 1' }
       ]
@@ -724,7 +731,7 @@
       category: 'Content Strategy & Production',
       title: 'Layton Lamell',
       blurb: 'Layton came to Vaguely Sharp to move beyond misaligned influencer content and rebuild his creative direction around stronger audience signals. We analyzed performance, identified engagement patterns, developed new formats, and used real-world response to guide the creative direction.',
-      videoSrc: 'Homepage Assets/Case Study Videos/Layton Reel.mp4',
+      embedSrc: 'https://www.youtube.com/embed/jB6XqoqhIBE?rel=0&playsinline=1',
       metrics: [
         { value: '3.2x increase', label: 'Average impressions' }
       ]
@@ -733,7 +740,7 @@
       category: 'Brand Campaign',
       title: 'Paint the City Pink x LIDs HD',
       blurb: 'Frosty Preme partnered with LIDs on four original fitted hat designs, with Vaguely Sharp producing the social campaign assets around the drop. The campaign turned product, community, and creative voice into a cultural moment.',
-      videoSrc: 'Homepage Assets/Case Study Videos/Lids Reel.mp4',
+      embedSrc: 'https://www.youtube.com/embed/1q1jizgtMaw?rel=0&playsinline=1',
       metrics: [
         { value: 'Sold out', label: 'All 4 designs in 2 hours' },
         { value: '300K+ impressions', label: 'Campaign reach' }
@@ -743,7 +750,7 @@
       category: 'Live Production & Event Marketing',
       title: 'Bobbie Clearly Off-Broadway Revival',
       blurb: 'A surprise Off-Broadway revival became a 2025 downtown hit thanks to a social-native promotional strategy to reach younger audiences where they actually are.',
-      videoSrc: 'Homepage Assets/Case Study Videos/BC Reel.mp4',
+      embedSrc: 'https://www.youtube.com/embed/xP-FI9qEAH8?rel=0&playsinline=1',
       metrics: [
         { value: '>100% sold', label: 'Run capacity' }
       ]
@@ -758,9 +765,10 @@
   const caseBlurb = document.querySelector('[data-case-blurb]');
   const caseMetrics = document.querySelector('[data-case-metrics]');
   const caseVideo = document.querySelector('[data-case-video]');
+  const caseEmbed = document.querySelector('[data-case-embed]');
   const casePoster = document.querySelector('[data-case-poster]');
   const caseVideoPlaceholder = document.querySelector('[data-case-video-placeholder]');
-  const focusableSelector = 'button, video[controls], [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const focusableSelector = 'button, iframe, video[controls], [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
   let activeCaseTrigger = null;
 
   const renderCaseStudy = (caseStudy) => {
@@ -781,9 +789,22 @@
       caseMetrics.appendChild(metricEl);
     });
 
-    if (caseStudy.videoSrc) {
+    if (caseStudy.embedSrc) {
+      caseVideo.pause();
+      caseVideo.removeAttribute('src');
+      caseVideo.load();
+      caseVideo.hidden = true;
+      caseEmbed.src = caseStudy.embedSrc;
+      caseEmbed.title = `${caseStudy.title} video`;
+      caseEmbed.hidden = false;
+      casePoster.hidden = true;
+      casePoster.removeAttribute('src');
+      caseVideoPlaceholder.hidden = true;
+    } else if (caseStudy.videoSrc) {
       caseVideo.src = caseStudy.videoSrc;
       caseVideo.hidden = false;
+      caseEmbed.hidden = true;
+      caseEmbed.removeAttribute('src');
       casePoster.hidden = true;
       casePoster.removeAttribute('src');
       caseVideoPlaceholder.hidden = true;
@@ -791,6 +812,8 @@
       caseVideo.removeAttribute('src');
       caseVideo.load();
       caseVideo.hidden = true;
+      caseEmbed.hidden = true;
+      caseEmbed.removeAttribute('src');
       casePoster.src = caseStudy.posterSrc;
       casePoster.alt = `${caseStudy.title} poster`;
       casePoster.hidden = false;
@@ -799,6 +822,8 @@
       caseVideo.removeAttribute('src');
       caseVideo.load();
       caseVideo.hidden = true;
+      caseEmbed.hidden = true;
+      caseEmbed.removeAttribute('src');
       casePoster.hidden = true;
       casePoster.removeAttribute('src');
       caseVideoPlaceholder.hidden = false;
@@ -828,6 +853,8 @@
     caseVideo.pause();
     caseVideo.removeAttribute('src');
     caseVideo.load();
+    caseEmbed.hidden = true;
+    caseEmbed.removeAttribute('src');
     casePoster.hidden = true;
     casePoster.removeAttribute('src');
 
