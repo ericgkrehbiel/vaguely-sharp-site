@@ -1,0 +1,110 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - img "Vaguely Sharp" [ref=e5]
+      - generic [ref=e6]:
+        - heading "Discover your brand's native language on social." [level=1] [ref=e7]:
+          - text: Discover your brand's
+          - emphasis [ref=e8]: native language
+          - text: on social.
+        - paragraph [ref=e9]: Helping identify and develop repeatable content formats to grow and engage your audience.
+        - generic [ref=e10]:
+          - link "Let's Get Started →" [ref=e11] [cursor=pointer]:
+            - /url: "#contact"
+          - link "See Our Work" [ref=e12] [cursor=pointer]:
+            - /url: "#proof"
+    - generic [ref=e13]:
+      - paragraph [ref=e14]: We've helped teams at
+      - generic [ref=e15]:
+        - img "Lids" [ref=e16]
+        - img "Puma" [ref=e17]
+        - img "Madewell" [ref=e18]
+  - generic [ref=e20]:
+    - paragraph [ref=e21]: Everyone is making more content than ever before.
+    - list [ref=e22]:
+      - listitem [ref=e23]: More channels.
+      - listitem [ref=e24]: More posts.
+      - listitem [ref=e25]: More trends.
+    - paragraph [ref=e26]:
+      - text: The hard part is knowing what worked,
+      - text: And what’s worth doing again.
+  - generic [ref=e28]:
+    - paragraph [ref=e29]: Most brands don't have a content problem.
+    - paragraph [ref=e30]: They have a discovery problem.
+  - generic [ref=e33]:
+    - generic [ref=e34]: The strongest content is not just better produced.
+    - generic [ref=e35]: It has a scalable engine underneath it.
+    - generic [ref=e36]: Something people keep coming back for.
+    - generic [ref=e37]: That can grow beyond one post, one campaign, or one moment.
+  - generic [ref=e40]:
+    - button "Deconstructed with Frosty Preme Original Digital Series Deconstructed with Frosty Preme Our first original series, built specifically for an organic niche audience. View case study" [ref=e41] [cursor=pointer]:
+      - img "Deconstructed with Frosty Preme" [ref=e43]
+      - generic [ref=e44]:
+        - generic [ref=e45]: Original Digital Series
+        - heading "Deconstructed with Frosty Preme" [level=3] [ref=e46]
+        - paragraph [ref=e47]: Our first original series, built specifically for an organic niche audience.
+        - generic [ref=e48]: View case study
+    - button "Layton Lamell Content Strategy & Production Layton Lamell Creative development, production, and Instagram optimization. View case study" [ref=e49] [cursor=pointer]:
+      - img "Layton Lamell" [ref=e51]
+      - generic [ref=e52]:
+        - generic [ref=e53]: Content Strategy & Production
+        - heading "Layton Lamell" [level=3] [ref=e54]
+        - paragraph [ref=e55]: Creative development, production, and Instagram optimization.
+        - generic [ref=e56]: View case study
+    - button "Paint the City Pink x LIDs HD Brand Campaign Paint the City Pink x LIDs HD Social-native marketing campaign for a legacy brand. View case study" [active] [ref=e57] [cursor=pointer]:
+      - img "Paint the City Pink x LIDs HD" [ref=e59]
+      - generic [ref=e60]:
+        - generic [ref=e61]: Brand Campaign
+        - heading "Paint the City Pink x LIDs HD" [level=3] [ref=e62]
+        - paragraph [ref=e63]: Social-native marketing campaign for a legacy brand.
+        - generic [ref=e64]: View case study
+    - button "Bobbie Clearly Off-Broadway Revival Live Production & Event Marketing Bobbie Clearly Off-Broadway Revival A sold-out run of a live narrative production in NYC, promoted exclusively on social. View case study" [ref=e65] [cursor=pointer]:
+      - img "Bobbie Clearly Off-Broadway Revival" [ref=e67]
+      - generic [ref=e68]:
+        - generic [ref=e69]: Live Production & Event Marketing
+        - heading "Bobbie Clearly Off-Broadway Revival" [level=3] [ref=e70]
+        - paragraph [ref=e71]: A sold-out run of a live narrative production in NYC, promoted exclusively on social.
+        - generic [ref=e72]: View case study
+  - dialog "Paint the City Pink x LIDs HD" [ref=e107]:
+    - button "Close case study" [ref=e108] [cursor=pointer]
+    - generic [ref=e111]: 9:16 video placeholder
+    - generic [ref=e112]:
+      - generic [ref=e113]: Brand Campaign
+      - heading "Paint the City Pink x LIDs HD" [level=2] [ref=e114]
+      - paragraph [ref=e115]: Frosty Preme partnered with LIDs on four original fitted hat designs, with Vaguely Sharp producing the social campaign assets around the drop. The campaign turned product, community, and creative voice into a cultural moment.
+      - generic [ref=e116]:
+        - generic [ref=e117]:
+          - generic [ref=e118]: Sold out
+          - text: All 4 designs in 2 hours
+        - generic [ref=e119]:
+          - generic [ref=e120]: 300K+ impressions
+          - text: Campaign reach
+  - generic [ref=e75]:
+    - paragraph [ref=e76]: We are building inside the same culture we help brands navigate.
+    - generic [ref=e77]:
+      - paragraph [ref=e78]: We are not a legacy agency applying an old model to new platforms.
+      - paragraph [ref=e79]: We also develop our own original media projects because we believe the best content companies learn by publishing, not just by advising.
+  - generic [ref=e81]:
+    - heading "Let’s find what’s worth repeating." [level=2] [ref=e82]
+    - generic [ref=e83]:
+      - generic [ref=e84]:
+        - textbox "Your name" [ref=e86]
+        - textbox "Email" [ref=e88]
+      - textbox "Tell us about your project..." [ref=e90]
+      - generic [ref=e91]:
+        - text: Website
+        - textbox [ref=e92]
+      - button "Send message" [ref=e93] [cursor=pointer]
+      - paragraph [ref=e94]
+    - generic [ref=e95]:
+      - text: 408 Broadway, 2nd Floor
+      - text: New York, NY 10013
+    - generic [ref=e97]:
+      - link "LinkedIn" [ref=e98] [cursor=pointer]:
+        - /url: https://www.linkedin.com/company/vaguelysharp/
+      - link "Instagram" [ref=e99] [cursor=pointer]:
+        - /url: https://www.instagram.com/vaguelysharp/
+      - link "YouTube" [ref=e100] [cursor=pointer]:
+        - /url: https://www.youtube.com/@vaguelysharp
+  - contentinfo [ref=e101]:
+    - paragraph [ref=e103]: © 2025 Krehbiel Productions, LLC DBA Vaguely Sharp. All rights reserved.

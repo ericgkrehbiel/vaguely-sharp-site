@@ -158,8 +158,13 @@
   .proof-card {
     background: var(--dark); border: 1px solid rgba(255,255,255,0.04);
     border-radius: 12px; overflow: hidden; transition: all 0.3s; display: flex; flex-direction: column;
+    cursor: pointer; outline: none;
   }
   .proof-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .proof-card:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(196,181,253,0.18);
+  }
   
   .proof-thumb { height: 220px; position: relative; overflow: hidden; }
   .proof-thumb-inner {
@@ -177,6 +182,224 @@
   .proof-tag { font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
   .proof-body h3 { font-family: 'Michroma', sans-serif; font-size: 1.0625rem; font-weight: 400; margin-bottom: 8px; letter-spacing: -0.01em; }
   .proof-body p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; }
+  .proof-card-action {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    margin-top: auto;
+    padding-top: 22px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .proof-card:hover .proof-card-action,
+  .proof-card:focus-visible .proof-card-action { color: var(--white); }
+
+  /* ── CASE STUDY OVERLAY ── */
+  body.case-modal-open { overflow: hidden; }
+
+  .case-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    perspective: 1400px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.24s ease, visibility 0.24s ease;
+  }
+  .case-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .case-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5,5,6,0.74);
+    backdrop-filter: blur(14px);
+  }
+  .case-modal {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+    width: min(960px, calc(100vw - 48px));
+    max-height: calc(100dvh - 48px);
+    overflow: auto;
+    background: linear-gradient(145deg, #242428 0%, #161618 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    box-shadow: 0 34px 100px rgba(0,0,0,0.62), 0 1px 0 rgba(255,255,255,0.08) inset;
+    opacity: 0;
+    transform: translate3d(0, 24px, -80px) scale(0.94) rotateX(8deg);
+    transform-origin: center;
+    transition: opacity 0.28s ease, transform 0.36s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .case-overlay.is-open .case-modal {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
+  }
+  .case-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    background: rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .case-close::before,
+  .case-close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 1.5px;
+    background: var(--white);
+    transform-origin: center;
+  }
+  .case-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .case-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+  .case-close:hover,
+  .case-close:focus-visible {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.26);
+    transform: translateY(-1px);
+    outline: none;
+  }
+  .case-video-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 34px;
+    background: #101012;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .case-video-frame {
+    position: relative;
+    width: min(100%, 296px);
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #050506;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.03) inset;
+  }
+  .case-video,
+  .case-poster,
+  .case-video-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .case-video {
+    object-fit: cover;
+    background: #050506;
+  }
+  .case-poster {
+    object-fit: cover;
+    background: #050506;
+  }
+  .case-video:fullscreen,
+  .case-video:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+  .case-video-placeholder {
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: rgba(255,255,255,0.44);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.45;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .case-video-placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px dashed rgba(255,255,255,0.18);
+    border-radius: 7px;
+  }
+  .case-video[hidden],
+  .case-poster[hidden],
+  .case-video-placeholder[hidden] {
+    display: none !important;
+  }
+  .case-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 560px;
+    padding: 58px 54px 48px;
+  }
+  .case-eyebrow {
+    color: var(--accent);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .case-title {
+    font-family: 'Michroma', sans-serif;
+    font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    padding-right: 22px;
+  }
+  .case-blurb {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 34px;
+  }
+  .case-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .case-metric {
+    min-height: 108px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.035);
+  }
+  .case-metric-value {
+    display: block;
+    color: var(--white);
+    font-family: 'Michroma', sans-serif;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .case-metric-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
 
   /* ── WHY US (dark) ── */
   .why-us { background: var(--dark); padding: 112px 24px; }
@@ -249,6 +472,24 @@
     .proof { padding: 40px 20px 80px !important; }
     .hero-clients { bottom: 32px; }
     .clients-logos { gap: 40px; }
+    .case-modal {
+      grid-template-columns: 1fr;
+      width: min(620px, calc(100vw - 32px));
+      max-height: calc(100dvh - 32px);
+    }
+    .case-video-panel {
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 28px 24px;
+    }
+    .case-video-frame {
+      width: min(58vw, 260px);
+    }
+    .case-content {
+      min-height: auto;
+      padding: 36px 28px 30px;
+    }
+    .case-title { padding-right: 38px; }
   }
 
   @media (max-width: 768px) {
@@ -258,6 +499,20 @@
   }
   @media (max-width: 600px) {
     .hero-value h1 { font-size: clamp(1.275rem, 5.36vw, 1.53rem); }
+    .case-overlay { padding: 16px; }
+    .case-video-frame { width: min(52vw, 210px); }
+    .case-content { padding: 30px 28px 26px; }
+    .case-blurb { font-size: 0.95rem; line-height: 1.65; margin-bottom: 26px; }
+    .case-metrics { grid-template-columns: 1fr; }
+    .case-metric { min-height: 92px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-overlay,
+    .case-modal,
+    .case-close { transition: none; }
+    .case-modal,
+    .case-overlay.is-open .case-modal { transform: none; }
   }
 
   /* Scrollbar */
@@ -328,45 +583,69 @@
 <section class="proof" id="proof">
   <div class="proof-inner">
     <div class="proof-grid">
-      <div class="proof-card fade-up stagger-1">
+      <div class="proof-card fade-up stagger-1" role="button" tabindex="0" aria-haspopup="dialog" data-case-study="deconstructed">
         <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/deconstructed thumbnail 1.jpg" alt="Deconstructed with Frosty Preme" class="proof-thumb-img"></div>
         <div class="proof-body">
           <span class="proof-tag">Original Digital Series</span>
           <h3>Deconstructed with Frosty Preme</h3>
           <p>Our first original series, built specifically for an organic niche audience.</p>
+          <span class="proof-card-action">View case study</span>
         </div>
       </div>
 
-      <div class="proof-card fade-up stagger-2">
+      <div class="proof-card fade-up stagger-2" role="button" tabindex="0" aria-haspopup="dialog" data-case-study="layton">
         <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/layton thumbnail 3.png" alt="Layton Lamell" class="proof-thumb-img"></div>
         <div class="proof-body">
           <span class="proof-tag">Content Strategy & Production</span>
           <h3>Layton Lamell</h3>
           <p>Creative development, production, and Instagram optimization.</p>
+          <span class="proof-card-action">View case study</span>
         </div>
       </div>
 
-      <div class="proof-card fade-up stagger-3">
+      <div class="proof-card fade-up stagger-3" role="button" tabindex="0" aria-haspopup="dialog" data-case-study="lids">
         <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/lids thumbnail 3.jpg" alt="Paint the City Pink x LIDs HD" class="proof-thumb-img"></div>
         <div class="proof-body">
           <span class="proof-tag">Brand Campaign</span>
           <h3>Paint the City Pink x LIDs HD</h3>
           <p>Social-native marketing campaign for a legacy brand.</p>
+          <span class="proof-card-action">View case study</span>
         </div>
       </div>
 
-      <div class="proof-card fade-up stagger-4">
+      <div class="proof-card fade-up stagger-4" role="button" tabindex="0" aria-haspopup="dialog" data-case-study="bobbie">
         <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/bc thumbnail 1.jpg" alt="Bobbie Clearly Off-Broadway Revival" class="proof-thumb-img"></div>
         <div class="proof-body">
           <span class="proof-tag">Live Production & Event Marketing</span>
           <h3>Bobbie Clearly Off-Broadway Revival</h3>
           <p>A sold-out run of a live narrative production in NYC, promoted exclusively on social.</p>
+          <span class="proof-card-action">View case study</span>
         </div>
       </div>
     </div>
 
   </div>
 </section>
+
+<div class="case-overlay" data-case-overlay aria-hidden="true">
+  <div class="case-backdrop" data-case-close></div>
+  <div class="case-modal" role="dialog" aria-modal="true" aria-labelledby="case-study-title">
+    <button class="case-close" type="button" aria-label="Close case study" data-case-close></button>
+    <div class="case-video-panel">
+      <div class="case-video-frame">
+        <video class="case-video" data-case-video controls muted loop playsinline preload="metadata" hidden></video>
+        <img class="case-poster" data-case-poster alt="" hidden>
+        <div class="case-video-placeholder" data-case-video-placeholder>9:16 video placeholder</div>
+      </div>
+    </div>
+    <div class="case-content">
+      <span class="case-eyebrow" data-case-category></span>
+      <h2 class="case-title" id="case-study-title" data-case-title></h2>
+      <p class="case-blurb" data-case-blurb></p>
+      <div class="case-metrics" data-case-metrics></div>
+    </div>
+  </div>
+</div>
 
 <!-- WHY US -->
 <section class="why-us" id="why-us">
@@ -416,7 +695,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-bottom">
-    <p>&copy; 2025 Krehbiel Productions, LLC DBA Vaguely Sharp. All rights reserved.</p>
+    <p>&copy; 2026 Krehbiel Productions, LLC DBA Vaguely Sharp. All rights reserved.</p>
     <div class="footer-bottom-globe">
       <img src="Rotating_globe.gif" alt="">
     </div>
@@ -429,6 +708,171 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  const caseStudies = {
+    deconstructed: {
+      category: 'Original Digital Series',
+      title: 'Deconstructed with Frosty Preme',
+      blurb: 'An original series hosted by Frosty Preme exploring the life and work of prominent designers in the NY custom fitted community.',
+      videoSrc: '',
+      posterSrc: 'Homepage Assets/Case Study Videos/Deconstructed Placeholder.png',
+      metrics: [
+        { value: '500+ assets', label: 'Across Season 1' }
+      ]
+    },
+    layton: {
+      category: 'Content Strategy & Production',
+      title: 'Layton Lamell',
+      blurb: 'Layton came to Vaguely Sharp to move beyond misaligned influencer content and rebuild his creative direction around stronger audience signals. We analyzed performance, identified engagement patterns, developed new formats, and used real-world response to guide the creative direction.',
+      videoSrc: 'Homepage Assets/Case Study Videos/Layton Reel.mp4',
+      metrics: [
+        { value: '3.2x increase', label: 'Average impressions' }
+      ]
+    },
+    lids: {
+      category: 'Brand Campaign',
+      title: 'Paint the City Pink x LIDs HD',
+      blurb: 'Frosty Preme partnered with LIDs on four original fitted hat designs, with Vaguely Sharp producing the social campaign assets around the drop. The campaign turned product, community, and creative voice into a cultural moment.',
+      videoSrc: 'Homepage Assets/Case Study Videos/Lids Reel.mp4',
+      metrics: [
+        { value: 'Sold out', label: 'All 4 designs in 2 hours' },
+        { value: '300K+ impressions', label: 'Campaign reach' }
+      ]
+    },
+    bobbie: {
+      category: 'Live Production & Event Marketing',
+      title: 'Bobbie Clearly Off-Broadway Revival',
+      blurb: 'A surprise Off-Broadway revival became a 2025 downtown hit thanks to a social-native promotional strategy to reach younger audiences where they actually are.',
+      videoSrc: 'Homepage Assets/Case Study Videos/BC Reel.mp4',
+      metrics: [
+        { value: '>100% sold', label: 'Run capacity' }
+      ]
+    }
+  };
+
+  const caseOverlay = document.querySelector('[data-case-overlay]');
+  const caseCards = document.querySelectorAll('[data-case-study]');
+  const caseCloseControls = document.querySelectorAll('[data-case-close]');
+  const caseCategory = document.querySelector('[data-case-category]');
+  const caseTitle = document.querySelector('[data-case-title]');
+  const caseBlurb = document.querySelector('[data-case-blurb]');
+  const caseMetrics = document.querySelector('[data-case-metrics]');
+  const caseVideo = document.querySelector('[data-case-video]');
+  const casePoster = document.querySelector('[data-case-poster]');
+  const caseVideoPlaceholder = document.querySelector('[data-case-video-placeholder]');
+  const focusableSelector = 'button, video[controls], [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  let activeCaseTrigger = null;
+
+  const renderCaseStudy = (caseStudy) => {
+    caseCategory.textContent = caseStudy.category;
+    caseTitle.textContent = caseStudy.title;
+    caseBlurb.textContent = caseStudy.blurb;
+    caseMetrics.innerHTML = '';
+
+    caseStudy.metrics.forEach((metric) => {
+      const metricEl = document.createElement('div');
+      metricEl.className = 'case-metric';
+      metricEl.innerHTML = `
+        <span class="case-metric-value"></span>
+        <span class="case-metric-label"></span>
+      `;
+      metricEl.querySelector('.case-metric-value').textContent = metric.value;
+      metricEl.querySelector('.case-metric-label').textContent = metric.label;
+      caseMetrics.appendChild(metricEl);
+    });
+
+    if (caseStudy.videoSrc) {
+      caseVideo.src = caseStudy.videoSrc;
+      caseVideo.hidden = false;
+      casePoster.hidden = true;
+      casePoster.removeAttribute('src');
+      caseVideoPlaceholder.hidden = true;
+    } else if (caseStudy.posterSrc) {
+      caseVideo.removeAttribute('src');
+      caseVideo.load();
+      caseVideo.hidden = true;
+      casePoster.src = caseStudy.posterSrc;
+      casePoster.alt = `${caseStudy.title} poster`;
+      casePoster.hidden = false;
+      caseVideoPlaceholder.hidden = true;
+    } else {
+      caseVideo.removeAttribute('src');
+      caseVideo.load();
+      caseVideo.hidden = true;
+      casePoster.hidden = true;
+      casePoster.removeAttribute('src');
+      caseVideoPlaceholder.hidden = false;
+    }
+  };
+
+  const openCaseStudy = (key, trigger) => {
+    const caseStudy = caseStudies[key];
+    if (!caseStudy || !caseOverlay) return;
+
+    activeCaseTrigger = trigger;
+    renderCaseStudy(caseStudy);
+    document.body.classList.add('case-modal-open');
+    caseOverlay.classList.add('is-open');
+    caseOverlay.setAttribute('aria-hidden', 'false');
+
+    const closeButton = caseOverlay.querySelector('.case-close');
+    if (closeButton) window.setTimeout(() => closeButton.focus({ preventScroll: true }), 30);
+  };
+
+  const closeCaseStudy = () => {
+    if (!caseOverlay || !caseOverlay.classList.contains('is-open')) return;
+
+    caseOverlay.classList.remove('is-open');
+    caseOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('case-modal-open');
+    caseVideo.pause();
+    caseVideo.removeAttribute('src');
+    caseVideo.load();
+    casePoster.hidden = true;
+    casePoster.removeAttribute('src');
+
+    if (activeCaseTrigger) activeCaseTrigger.focus();
+    activeCaseTrigger = null;
+  };
+
+  caseCards.forEach((card) => {
+    card.addEventListener('click', () => openCaseStudy(card.dataset.caseStudy, card));
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openCaseStudy(card.dataset.caseStudy, card);
+      }
+    });
+  });
+
+  caseCloseControls.forEach((control) => {
+    control.addEventListener('click', closeCaseStudy);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!caseOverlay || !caseOverlay.classList.contains('is-open')) return;
+
+    if (event.key === 'Escape') {
+      closeCaseStudy();
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const focusable = [...caseOverlay.querySelectorAll(focusableSelector)].filter((el) => !el.hasAttribute('disabled') && !el.hidden);
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 
   const contactForm = document.querySelector('[data-contact-form]');
 

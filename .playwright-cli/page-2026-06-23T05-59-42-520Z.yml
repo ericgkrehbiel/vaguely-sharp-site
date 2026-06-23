@@ -1,0 +1,93 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - img "Vaguely Sharp" [ref=e5]
+    - generic [ref=e6]:
+      - heading "Discover your brand's native language on social." [level=1] [ref=e7]:
+        - text: Discover your brand's
+        - emphasis [ref=e8]: native language
+        - text: on social.
+      - paragraph [ref=e9]: Helping identify and develop repeatable content formats to grow and engage your audience.
+      - generic [ref=e10]:
+        - link "Let's Get Started →" [ref=e11] [cursor=pointer]:
+          - /url: "#contact"
+        - link "See Our Work" [ref=e12] [cursor=pointer]:
+          - /url: "#proof"
+  - generic [ref=e14]:
+    - paragraph [ref=e15]: Everyone is making more content than ever before.
+    - list [ref=e16]:
+      - listitem [ref=e17]: More channels.
+      - listitem [ref=e18]: More posts.
+      - listitem [ref=e19]: More trends.
+    - paragraph [ref=e20]:
+      - text: The hard part is knowing what worked,
+      - text: And what’s worth doing again.
+  - generic [ref=e22]:
+    - paragraph [ref=e23]: Most brands don't have a content problem.
+    - paragraph [ref=e24]: They have a discovery problem.
+  - generic [ref=e27]:
+    - generic [ref=e28]: The strongest content is not just better produced.
+    - generic [ref=e29]: It has a scalable engine underneath it.
+    - generic [ref=e30]: Something people keep coming back for.
+    - generic [ref=e31]: That can grow beyond one post, one campaign, or one moment.
+  - generic [ref=e33]:
+    - generic [ref=e34]:
+      - paragraph [ref=e35]: We've helped teams at
+      - generic [ref=e36]:
+        - img "Lids" [ref=e37]
+        - img "Puma" [ref=e38]
+        - img "Madewell" [ref=e39]
+    - heading "Case Studies" [level=2] [ref=e41]
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - img "Deconstructed with Frosty Preme" [ref=e45]
+        - generic [ref=e46]:
+          - generic [ref=e47]: Original Digital Series
+          - heading "Deconstructed with Frosty Preme" [level=3] [ref=e48]
+          - paragraph [ref=e49]: Our first original series, built specifically for an organic niche audience.
+      - generic [ref=e50]:
+        - img "Layton Lamell" [ref=e52]
+        - generic [ref=e53]:
+          - generic [ref=e54]: Content Strategy & Production
+          - heading "Layton Lamell" [level=3] [ref=e55]
+          - paragraph [ref=e56]: Creative development, production, and Instagram optimization.
+      - generic [ref=e57]:
+        - img "Paint the City Pink x LIDs HD" [ref=e59]
+        - generic [ref=e60]:
+          - generic [ref=e61]: Brand Campaign
+          - heading "Paint the City Pink x LIDs HD" [level=3] [ref=e62]
+          - paragraph [ref=e63]: Social-native marketing campaign for a legacy brand.
+      - generic [ref=e64]:
+        - img "Bobbie Clearly Off-Broadway Revival" [ref=e66]
+        - generic [ref=e67]:
+          - generic [ref=e68]: Live Production & Event Marketing
+          - heading "Bobbie Clearly Off-Broadway Revival" [level=3] [ref=e69]
+          - paragraph [ref=e70]: A sold-out run of a live narrative production in NYC, promoted exclusively on social.
+  - generic [ref=e73]:
+    - paragraph [ref=e74]: We are building inside the same culture we help brands navigate.
+    - generic [ref=e75]:
+      - paragraph [ref=e76]: We are not a legacy agency applying an old model to new platforms.
+      - paragraph [ref=e77]: We also develop our own original media projects because we believe the best content companies learn by publishing, not just by advising.
+  - generic [ref=e79]:
+    - heading "Let’s find what’s worth repeating." [level=2] [ref=e80]
+    - generic [ref=e81]:
+      - generic [ref=e82]:
+        - textbox "Your name" [ref=e84]
+        - textbox "Email" [ref=e86]
+      - textbox "Tell us about your project..." [ref=e88]
+      - generic [ref=e89]:
+        - text: Website
+        - textbox [ref=e90]
+      - button "Send message" [ref=e91] [cursor=pointer]
+      - paragraph [ref=e92]
+    - generic [ref=e93]:
+      - text: 408 Broadway, 2nd Floor
+      - text: New York, NY 10013
+    - generic [ref=e95]:
+      - link "LinkedIn" [ref=e96] [cursor=pointer]:
+        - /url: https://www.linkedin.com/company/vaguelysharp/
+      - link "Instagram" [ref=e97] [cursor=pointer]:
+        - /url: https://www.instagram.com/vaguelysharp/
+      - link "YouTube" [ref=e98] [cursor=pointer]:
+        - /url: https://www.youtube.com/@vaguelysharp
+  - contentinfo [ref=e99]:
+    - paragraph [ref=e101]: © 2025 Krehbiel Productions, LLC DBA Vaguely Sharp. All rights reserved.
