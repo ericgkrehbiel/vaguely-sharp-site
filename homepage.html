@@ -205,6 +205,10 @@
   .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.25); }
   .form-field input:focus, .form-field textarea:focus { border-color: var(--accent); }
   .form-field textarea { min-height: 100px; resize: vertical; }
+  .form-extra { position: absolute; left: -9999px; height: 1px; width: 1px; overflow: hidden; }
+  .form-status { min-height: 20px; color: var(--text-light); font-size: 0.875rem; line-height: 1.5; text-align: left; }
+  .form-status.success { color: var(--accent); }
+  .form-status.error { color: var(--accent-warm); }
 
   .btn-submit {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -212,6 +216,7 @@
     text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-family: inherit; letter-spacing: 0.02em;
   }
   .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-submit:disabled { cursor: not-allowed; opacity: 0.7; transform: none; }
 
   .contact-address {
     color: var(--text-light); font-family: 'Michroma', sans-serif;
@@ -343,7 +348,7 @@
       </div>
 
       <div class="proof-card fade-up stagger-3">
-        <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/lids thumbnail 2.jpg" alt="Paint the City Pink x LIDs HD" class="proof-thumb-img"></div>
+        <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/lids thumbnail 3.jpg" alt="Paint the City Pink x LIDs HD" class="proof-thumb-img"></div>
         <div class="proof-body">
           <span class="proof-tag">Brand Campaign</span>
           <h3>Paint the City Pink x LIDs HD</h3>
@@ -382,13 +387,21 @@
   <div class="cta-inner fade-up">
     <h2>Let's get started.<br><em>Connect with us:</em></h2>
 
-    <form class="contact-form" onsubmit="event.preventDefault();">
+    <form class="contact-form" action="https://script.google.com/macros/s/REPLACE_WITH_DEPLOYMENT_ID/exec" method="POST" data-contact-form>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-        <div class="form-field"><input type="text" placeholder="Your name"></div>
-        <div class="form-field"><input type="email" placeholder="Email"></div>
+        <div class="form-field"><input type="text" name="name" placeholder="Your name" autocomplete="name" required></div>
+        <div class="form-field"><input type="email" name="email" placeholder="Email" autocomplete="email" required></div>
       </div>
-      <div class="form-field"><textarea placeholder="Tell us about your project..."></textarea></div>
+      <div class="form-field"><textarea name="message" placeholder="Tell us about your project..." required></textarea></div>
+      <div class="form-extra" aria-hidden="true">
+        <label for="contact-website">Website</label>
+        <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="source" value="vaguelysharp.com">
+      <input type="hidden" name="page_url" value="">
+      <input type="hidden" name="user_agent" value="">
       <button type="submit" class="btn-submit">Submit</button>
+      <p class="form-status" aria-live="polite" data-form-status></p>
     </form>
 
     <div class="contact-address" style="text-align:center;">408 Broadway, 2nd Floor<br>New York, NY 10013</div>
@@ -417,6 +430,60 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  const contactForm = document.querySelector('[data-contact-form]');
+
+  if (contactForm) {
+    const formStatus = contactForm.querySelector('[data-form-status]');
+    const submitButton = contactForm.querySelector('.btn-submit');
+    const pageUrlField = contactForm.querySelector('[name="page_url"]');
+    const userAgentField = contactForm.querySelector('[name="user_agent"]');
+
+    const updateHiddenFields = () => {
+      if (pageUrlField) pageUrlField.value = window.location.href;
+      if (userAgentField) userAgentField.value = window.navigator.userAgent;
+    };
+
+    const setFormStatus = (message, type = '') => {
+      if (!formStatus) return;
+      formStatus.textContent = message;
+      formStatus.className = `form-status${type ? ` ${type}` : ''}`;
+    };
+
+    updateHiddenFields();
+
+    contactForm.addEventListener('submit', async (event) => {
+      const endpoint = contactForm.action;
+      const endpointReady = endpoint && !endpoint.includes('REPLACE_WITH_DEPLOYMENT_ID');
+
+      if (!endpointReady) {
+        event.preventDefault();
+        setFormStatus('This form is not connected yet. Please add the Google Apps Script Web App URL.', 'error');
+        return;
+      }
+
+      event.preventDefault();
+      updateHiddenFields();
+      setFormStatus('Sending...');
+      submitButton.disabled = true;
+
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new FormData(contactForm)
+        });
+
+        contactForm.reset();
+        updateHiddenFields();
+        setFormStatus("Thanks. We'll be in touch shortly.", 'success');
+      } catch (error) {
+        setFormStatus('Something went wrong. Please try again or email us directly.', 'error');
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  }
 </script>
 
 </body>
