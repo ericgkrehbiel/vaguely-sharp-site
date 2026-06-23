@@ -109,7 +109,7 @@
 
   /* ── PROBLEM (dark) ── */
   .problem {
-    background: var(--dark); padding: 104px 24px; text-align: center;
+    background: var(--dark); padding: 96px 24px; text-align: center;
   }
   .problem-inner { max-width: 720px; margin: 0 auto; }
   
@@ -142,7 +142,7 @@
 
   /* ── BELIEF (dark) ── */
   .belief {
-    background: var(--dark); padding: 108px 24px; text-align: center;
+    background: var(--dark); padding: 88px 24px; text-align: center;
   }
   .belief-inner { max-width: 640px; margin: 0 auto; }
 
@@ -150,13 +150,8 @@
   .belief-line { display: block; }
 
   /* ── PROOF / CASE STUDIES (dark-2) ── */
-  .proof { background: var(--dark-2); padding: 72px 24px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .proof { background: var(--dark-2); padding: 44px 24px 72px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
   .proof-inner { max-width: 1100px; margin: 0 auto; }
-
-  .proof-header { text-align: center; margin-bottom: 64px; }
-  .proof-header h2 {
-    font-family: 'Michroma', sans-serif;
-    font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 400; letter-spacing: -0.03em; margin-bottom: 16px; }
 
   .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   
@@ -196,7 +191,7 @@
 
   .cta-inner h2 {
     font-family: 'Michroma', sans-serif;
-    font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 400; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.2; }
+    font-size: clamp(1.5rem, 2.45vw, 1.95rem); font-weight: 400; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.2; }
   .cta-inner h2 em { font-style: normal; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .cta-inner > p { color: var(--text-light); font-size: 1.0625rem; line-height: 1.7; margin-bottom: 40px; }
 
@@ -251,6 +246,7 @@
     .why-us-body, .proof-grid { grid-template-columns: 1fr; gap: 40px; }
     section { padding: 80px 20px !important; }
     .hero { padding-bottom: 150px !important; }
+    .proof { padding: 40px 20px 80px !important; }
     .hero-clients { bottom: 32px; }
     .clients-logos { gap: 40px; }
   }
@@ -331,9 +327,6 @@
 <!-- PROOF -->
 <section class="proof" id="proof">
   <div class="proof-inner">
-    <div class="proof-header fade-up">
-      <h2>Case Studies</h2>
-    </div>
     <div class="proof-grid">
       <div class="proof-card fade-up stagger-1">
         <div class="proof-thumb"><img src="Homepage Assets/Thumbnail Images/deconstructed thumbnail 1.jpg" alt="Deconstructed with Frosty Preme" class="proof-thumb-img"></div>
