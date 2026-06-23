@@ -14,7 +14,7 @@ website contact form.
 7. Set `Execute as` to `Me`.
 8. Set `Who has access` to `Anyone`.
 9. Deploy and copy the Web App URL ending in `/exec`.
-10. In `homepage.html`, replace:
+10. In `index.html`, replace:
 
 ```html
 https://script.google.com/macros/s/REPLACE_WITH_DEPLOYMENT_ID/exec
