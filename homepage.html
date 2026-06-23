@@ -32,7 +32,7 @@
   .hero {
     min-height: 100vh; background: var(--dark-3);
     display: flex; align-items: center; justify-content: center;
-    padding: 64px 24px; position: relative; overflow: hidden;
+    padding: 64px 24px 156px; position: relative; overflow: hidden;
   }
 
   .hero-content {
@@ -56,6 +56,42 @@
   .hero-value p { font-size: 1rem; color: var(--text-light); line-height: 1.7; max-width: 540px; margin: 0 auto 40px; }
 
   .hero-cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+  .hero-clients {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 40px;
+    text-align: center;
+    z-index: 10;
+  }
+  .hero-clients p {
+    font-size: 0.8125rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.32);
+    margin-bottom: 24px;
+  }
+  .clients-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+    flex-wrap: wrap;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .clients-logos img {
+    height: 34px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.46;
+    transition: all 0.3s;
+  }
+  .clients-logos img:hover {
+    opacity: 0.78;
+  }
   
   .btn-primary {
     display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--dark);
@@ -117,38 +153,6 @@
   .proof { background: var(--dark-2); padding: 80px 24px; border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
   .proof-inner { max-width: 1100px; margin: 0 auto; }
 
-
-  .proof-clients {
-    text-align: center;
-    margin-bottom: 72px;
-  }
-  .proof-clients p {
-    font-size: 0.975rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin-bottom: 32px;
-  }
-  .clients-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 64px;
-    flex-wrap: wrap;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-  .clients-logos img {
-    height: 38px;
-    width: auto;
-    filter: brightness(0) invert(1);
-    opacity: 0.5;
-    transition: all 0.3s;
-  }
-  .clients-logos img:hover {
-    opacity: 0.8;
-  }
   .proof-header { text-align: center; margin-bottom: 64px; }
   .proof-header h2 {
     font-family: 'Michroma', sans-serif;
@@ -246,10 +250,15 @@
   @media (max-width: 900px) {
     .why-us-body, .proof-grid { grid-template-columns: 1fr; gap: 40px; }
     section { padding: 80px 20px !important; }
+    .hero { padding-bottom: 150px !important; }
+    .hero-clients { bottom: 32px; }
+    .clients-logos { gap: 40px; }
   }
 
   @media (max-width: 768px) {
     .problem-list { flex-direction: column; gap: 24px; }
+    .hero-clients p { margin-bottom: 18px; }
+    .clients-logos img { height: 28px; }
   }
   @media (max-width: 600px) {
     .hero-value h1 { font-size: clamp(1.275rem, 5.36vw, 1.53rem); }
@@ -274,6 +283,14 @@
         <a href="#contact" class="btn-primary">Let's Get Started →</a>
         <a href="#proof" class="btn-secondary">See Our Work</a>
       </div>
+    </div>
+  </div>
+  <div class="hero-clients fade-up stagger-2">
+    <p>We've helped teams at</p>
+    <div class="clients-logos">
+      <img src="Homepage Assets/Client Logos/lids logo black.png" alt="Lids">
+      <img src="Homepage Assets/Client Logos/puma logo white.png" alt="Puma">
+      <img src="Homepage Assets/Client Logos/madewell logo white.png" alt="Madewell">
     </div>
   </div>
 </section>
@@ -314,16 +331,6 @@
 <!-- PROOF -->
 <section class="proof" id="proof">
   <div class="proof-inner">
-
-    <div class="proof-clients fade-up">
-      <p>We've helped teams at</p>
-      <div class="clients-logos">
-        <img src="Homepage Assets/Client Logos/lids logo black.png" alt="Lids">
-        <img src="Homepage Assets/Client Logos/puma logo white.png" alt="Puma">
-        <img src="Homepage Assets/Client Logos/madewell logo white.png" alt="Madewell">
-      </div>
-    </div>
-
     <div class="proof-header fade-up">
       <h2>Case Studies</h2>
     </div>
