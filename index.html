@@ -90,7 +90,7 @@
   }
 
   .hero-video-bg.is-mobile-marquee .hero-video-track {
-    animation: heroVideoMobilePan 42s ease-in-out infinite alternate;
+    animation: none;
   }
 
   .hero-video-group {
@@ -146,11 +146,6 @@
   @keyframes heroVideoMarquee {
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-50%, 0, 0); }
-  }
-
-  @keyframes heroVideoMobilePan {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(calc(-100% + 100vw), 0, 0); }
   }
 
   .hero-content {
@@ -1061,10 +1056,16 @@
   ];
 
   const heroVideoState = {
+    animationFrame: null,
+    cardWidth: 0,
     cycleTimer: null,
     index: 0,
     inView: true,
+    lastFrame: 0,
+    mobileOffset: 0,
     reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    resizeHandler: null,
+    slots: [],
     videoObserver: null,
     videos: []
   };
@@ -1114,9 +1115,19 @@
   };
 
   const clearHeroVideoRender = (track) => {
+    window.cancelAnimationFrame(heroVideoState.animationFrame);
+    heroVideoState.animationFrame = null;
+    heroVideoState.cardWidth = 0;
     window.clearInterval(heroVideoState.cycleTimer);
     heroVideoState.cycleTimer = null;
     heroVideoState.index = 0;
+    heroVideoState.lastFrame = 0;
+    heroVideoState.mobileOffset = 0;
+    if (heroVideoState.resizeHandler) {
+      window.removeEventListener('resize', heroVideoState.resizeHandler);
+      heroVideoState.resizeHandler = null;
+    }
+    heroVideoState.slots = [];
     if (heroVideoState.videoObserver) {
       heroVideoState.videoObserver.disconnect();
       heroVideoState.videoObserver = null;
@@ -1128,6 +1139,7 @@
     });
     heroVideoState.videos = [];
     track.closest('.hero-video-bg')?.classList.remove('is-single', 'is-mobile-marquee');
+    track.style.transform = '';
     track.replaceChildren();
   };
 
@@ -1176,41 +1188,92 @@
     group.className = 'hero-video-group';
     group.setAttribute('aria-hidden', 'true');
 
-    videoSources.forEach((src, index) => {
+    const visibleSlotCount = Math.min(3, videoSources.length);
+    const mobileSpeed = 56;
+
+    const assignSlotVideo = (slot, sourceIndex, preload = 'none') => {
+      const src = videoSources[sourceIndex];
+      slot.sourceIndex = sourceIndex;
+      slot.video.pause();
+      slot.video.src = src;
+      slot.video.title = `Hero background video ${sourceIndex + 1}`;
+      slot.video.preload = preload;
+      slot.video.dataset.heroCanPlay = 'false';
+      slot.video.load();
+    };
+
+    const updateMobileVideoRoles = () => {
+      heroVideoState.slots.forEach((slot, slotIndex) => {
+        const shouldPlay = slotIndex < 2;
+        slot.video.dataset.heroCanPlay = shouldPlay ? 'true' : 'false';
+        slot.video.preload = shouldPlay ? 'auto' : 'none';
+
+        if (shouldPlay) {
+          playHeroVideo(slot.video);
+        } else {
+          slot.video.pause();
+        }
+      });
+    };
+
+    for (let slotIndex = 0; slotIndex < visibleSlotCount; slotIndex += 1) {
       const card = document.createElement('div');
       card.className = 'hero-video-card';
 
-      const video = createHeroVideo(src, index, index === 0 ? 'auto' : 'none');
+      const video = createHeroVideo(videoSources[slotIndex], slotIndex, slotIndex < 2 ? 'auto' : 'none');
       video.autoplay = false;
       video.removeAttribute('autoplay');
-      video.dataset.heroCanPlay = 'false';
 
       card.appendChild(video);
       group.appendChild(card);
       heroVideoState.videos.push(video);
-    });
+      heroVideoState.slots.push({ card, video, sourceIndex: slotIndex });
+    }
 
     track.appendChild(group);
 
-    heroVideoState.videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target;
-        const canPlay = entry.isIntersecting;
-        video.dataset.heroCanPlay = canPlay ? 'true' : 'false';
+    const measureCardWidth = () => {
+      heroVideoState.cardWidth = heroVideoState.slots[0]?.card.getBoundingClientRect().width || 0;
+    };
 
-        if (canPlay) {
-          playHeroVideo(video);
-        } else {
-          video.pause();
+    const recycleMobileSlot = () => {
+      const slot = heroVideoState.slots.shift();
+      const lastSlot = heroVideoState.slots[heroVideoState.slots.length - 1];
+      const nextSourceIndex = ((lastSlot?.sourceIndex ?? -1) + 1) % videoSources.length;
+
+      assignSlotVideo(slot, nextSourceIndex);
+      group.appendChild(slot.card);
+      heroVideoState.slots.push(slot);
+      updateMobileVideoRoles();
+    };
+
+    const animateMobileMarquee = (timestamp) => {
+      if (!heroVideoState.lastFrame) heroVideoState.lastFrame = timestamp;
+
+      const elapsedSeconds = Math.min((timestamp - heroVideoState.lastFrame) / 1000, 0.08);
+      heroVideoState.lastFrame = timestamp;
+
+      if (heroVideoState.inView && !document.hidden) {
+        if (!heroVideoState.cardWidth) measureCardWidth();
+        heroVideoState.mobileOffset += elapsedSeconds * mobileSpeed;
+
+        while (heroVideoState.cardWidth && heroVideoState.mobileOffset >= heroVideoState.cardWidth) {
+          heroVideoState.mobileOffset -= heroVideoState.cardWidth;
+          recycleMobileSlot();
+          measureCardWidth();
         }
-      });
-    }, {
-      root: null,
-      rootMargin: '0px 70% 0px 70%',
-      threshold: 0.01
-    });
 
-    heroVideoState.videos.forEach((video) => heroVideoState.videoObserver.observe(video));
+        track.style.transform = `translate3d(${-heroVideoState.mobileOffset}px, 0, 0)`;
+      }
+
+      heroVideoState.animationFrame = window.requestAnimationFrame(animateMobileMarquee);
+    };
+
+    measureCardWidth();
+    updateMobileVideoRoles();
+    heroVideoState.animationFrame = window.requestAnimationFrame(animateMobileMarquee);
+    heroVideoState.resizeHandler = measureCardWidth;
+    window.addEventListener('resize', heroVideoState.resizeHandler, { passive: true });
   };
 
   const renderDesktopHeroVideoMarquee = (track, videoSources) => {
