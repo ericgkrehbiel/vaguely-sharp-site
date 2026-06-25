@@ -105,7 +105,14 @@
     height: calc(100% + 2px);
     border: 0;
     filter: saturate(0.92) contrast(1.08) brightness(0.76);
+    object-fit: cover;
     pointer-events: none;
+  }
+
+  .hero-video-embed::-webkit-media-controls,
+  .hero-video-embed::-webkit-media-controls-enclosure,
+  .hero-video-embed::-webkit-media-controls-panel {
+    display: none !important;
   }
 
   .hero-video-bg::after {
@@ -1019,61 +1026,22 @@
 </footer>
 
 <script>
-  const heroVideoLinks = [
-    'https://youtube.com/shorts/D71Nj8EOk00',
-    'https://youtube.com/shorts/dv-LZwLpnfA',
-    'https://youtube.com/shorts/Y0sL0zgJHSs',
-    'https://youtube.com/shorts/jB6XqoqhIBE',
-    'https://youtube.com/shorts/x2lM2EkwqUo',
-    'https://youtube.com/shorts/CA1ELOmV4_k'
+  const heroVideoSources = [
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/26-007_Deconstructed_AnnouncementVideo_Approved.mp4',
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/PUMA_final_version.mp4',
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/SUEDES_FINAL.mp4',
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/Sequence%2002.mp4',
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/YTDown.com_Shorts_Kevin-Hart-sells-cards-of-SHORT-players-_Media_uZcpnbcv2Zg_001_1080p.mp4',
+    'https://pub-6e771bce814d4b3d96a5a53a2233adb8.r2.dev/hero/sequence%203.mp4'
   ];
-
-  const getYouTubeId = (link) => {
-    try {
-      const url = new URL(link);
-      const hostname = url.hostname.replace(/^www\./, '');
-      const pathParts = url.pathname.split('/').filter(Boolean);
-
-      if (hostname === 'youtu.be') return pathParts[0] || '';
-      if (pathParts[0] === 'embed' || pathParts[0] === 'shorts') return pathParts[1] || '';
-
-      return url.searchParams.get('v') || '';
-    } catch (error) {
-      return link;
-    }
-  };
-
-  const buildHeroEmbedSrc = (link) => {
-    const videoId = getYouTubeId(link);
-    if (!videoId) return '';
-
-    const params = new URLSearchParams({
-      autohide: '1',
-      autoplay: '1',
-      cc_load_policy: '0',
-      controls: '0',
-      disablekb: '1',
-      fs: '0',
-      iv_load_policy: '3',
-      loop: '1',
-      modestbranding: '1',
-      mute: '1',
-      playlist: videoId,
-      playsinline: '1',
-      rel: '0',
-      showinfo: '0'
-    });
-
-    return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
-  };
 
   const renderHeroVideoCarousel = () => {
     const track = document.querySelector('[data-hero-video-track]');
     if (!track) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const embedSources = heroVideoLinks.map(buildHeroEmbedSrc).filter(Boolean).slice(0, 6);
-    if (reducedMotion || !embedSources.length) return;
+    const videoSources = heroVideoSources.filter(Boolean).slice(0, 6);
+    if (reducedMotion || !videoSources.length) return;
 
     const fragment = document.createDocumentFragment();
 
@@ -1082,20 +1050,28 @@
       group.className = 'hero-video-group';
       group.setAttribute('aria-hidden', 'true');
 
-      embedSources.forEach((src, index) => {
+      videoSources.forEach((src, index) => {
         const card = document.createElement('div');
         card.className = 'hero-video-card';
 
-        const iframe = document.createElement('iframe');
-        iframe.className = 'hero-video-embed';
-        iframe.src = src;
-        iframe.title = `Hero background video ${index + 1}`;
-        iframe.loading = groupIndex === 0 ? 'eager' : 'lazy';
-        iframe.tabIndex = -1;
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        const video = document.createElement('video');
+        video.className = 'hero-video-embed';
+        video.src = src;
+        video.title = `Hero background video ${index + 1}`;
+        video.autoplay = true;
+        video.controls = false;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = groupIndex === 0 ? 'auto' : 'metadata';
+        video.disablePictureInPicture = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('aria-hidden', 'true');
 
-        card.appendChild(iframe);
+        card.appendChild(video);
+        video.play().catch(() => {});
         group.appendChild(card);
       });
 
