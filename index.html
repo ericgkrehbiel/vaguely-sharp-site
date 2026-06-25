@@ -62,6 +62,64 @@
     padding: 64px 24px 156px; position: relative; overflow: hidden;
   }
 
+  .hero-video-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--dark-3);
+  }
+
+  .hero-video-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    height: 100%;
+    width: max-content;
+    transform: translate3d(0, 0, 0);
+    animation: heroVideoMarquee 72s linear infinite;
+    will-change: transform;
+  }
+
+  .hero-video-group {
+    display: flex;
+    flex: 0 0 auto;
+    height: 100%;
+  }
+
+  .hero-video-card {
+    position: relative;
+    flex: 0 0 calc(100dvh * 9 / 16);
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: #050506;
+  }
+
+  .hero-video-embed {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border: 0;
+    filter: saturate(0.92) contrast(1.08) brightness(0.76);
+  }
+
+  .hero-video-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(20,20,21,0.58);
+  }
+
+  @keyframes heroVideoMarquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
   .hero-content {
     text-align: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -737,6 +795,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-video-track {
+      animation: none;
+      transform: translate3d(-8%, 0, 0);
+    }
     .case-overlay,
     .case-modal,
     .case-close { transition: none; }
@@ -754,6 +816,9 @@
 
 <!-- HERO -->
 <section class="hero" id="hero">
+  <div class="hero-video-bg" aria-hidden="true">
+    <div class="hero-video-track" data-hero-video-track></div>
+  </div>
   <div class="hero-content fade-up">
     <div class="hero-logo"><img src="Logo/Logo High Res/Cropped-High/Logo-w-crop-high.png" alt="Vaguely Sharp"></div>
     <div class="hero-value">
@@ -953,6 +1018,91 @@
 </footer>
 
 <script>
+  const heroVideoLinks = [
+    'https://youtube.com/shorts/D71Nj8EOk00',
+    'https://youtube.com/shorts/dv-LZwLpnfA',
+    'https://youtube.com/shorts/_doMUNvzTbw',
+    'https://youtube.com/shorts/jB6XqoqhIBE',
+    'https://youtube.com/shorts/x2lM2EkwqUo',
+    'https://youtube.com/shorts/CA1ELOmV4_k'
+  ];
+
+  const getYouTubeId = (link) => {
+    try {
+      const url = new URL(link);
+      const hostname = url.hostname.replace(/^www\./, '');
+      const pathParts = url.pathname.split('/').filter(Boolean);
+
+      if (hostname === 'youtu.be') return pathParts[0] || '';
+      if (pathParts[0] === 'embed' || pathParts[0] === 'shorts') return pathParts[1] || '';
+
+      return url.searchParams.get('v') || '';
+    } catch (error) {
+      return link;
+    }
+  };
+
+  const buildHeroEmbedSrc = (link) => {
+    const videoId = getYouTubeId(link);
+    if (!videoId) return '';
+
+    const params = new URLSearchParams({
+      autoplay: '1',
+      controls: '0',
+      disablekb: '1',
+      fs: '0',
+      iv_load_policy: '3',
+      loop: '1',
+      modestbranding: '1',
+      mute: '1',
+      playlist: videoId,
+      playsinline: '1',
+      rel: '0'
+    });
+
+    return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+  };
+
+  const renderHeroVideoCarousel = () => {
+    const track = document.querySelector('[data-hero-video-track]');
+    if (!track) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const embedSources = heroVideoLinks.map(buildHeroEmbedSrc).filter(Boolean).slice(0, 6);
+    if (reducedMotion || !embedSources.length) return;
+
+    const fragment = document.createDocumentFragment();
+
+    for (let groupIndex = 0; groupIndex < 2; groupIndex += 1) {
+      const group = document.createElement('div');
+      group.className = 'hero-video-group';
+      group.setAttribute('aria-hidden', 'true');
+
+      embedSources.forEach((src, index) => {
+        const card = document.createElement('div');
+        card.className = 'hero-video-card';
+
+        const iframe = document.createElement('iframe');
+        iframe.className = 'hero-video-embed';
+        iframe.src = src;
+        iframe.title = `Hero background video ${index + 1}`;
+        iframe.loading = groupIndex === 0 ? 'eager' : 'lazy';
+        iframe.tabIndex = -1;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+        card.appendChild(iframe);
+        group.appendChild(card);
+      });
+
+      fragment.appendChild(group);
+    }
+
+    track.appendChild(fragment);
+  };
+
+  renderHeroVideoCarousel();
+
   // Scroll animations
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
