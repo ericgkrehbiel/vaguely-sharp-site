@@ -1044,6 +1044,15 @@
     if (reducedMotion || !videoSources.length) return;
 
     const fragment = document.createDocumentFragment();
+    const videos = [];
+
+    const playHeroVideos = () => {
+      videos.forEach((video) => {
+        video.muted = true;
+        video.defaultMuted = true;
+        video.play().catch(() => {});
+      });
+    };
 
     for (let groupIndex = 0; groupIndex < 2; groupIndex += 1) {
       const group = document.createElement('div');
@@ -1062,16 +1071,19 @@
         video.controls = false;
         video.loop = true;
         video.muted = true;
+        video.defaultMuted = true;
         video.playsInline = true;
         video.preload = groupIndex === 0 ? 'auto' : 'metadata';
         video.disablePictureInPicture = true;
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
         video.setAttribute('muted', '');
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
         video.setAttribute('aria-hidden', 'true');
 
         card.appendChild(video);
-        video.play().catch(() => {});
+        videos.push(video);
         group.appendChild(card);
       });
 
@@ -1079,6 +1091,19 @@
     }
 
     track.appendChild(fragment);
+
+    videos.forEach((video) => {
+      video.load();
+      video.addEventListener('canplay', playHeroVideos, { once: true });
+    });
+
+    requestAnimationFrame(playHeroVideos);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) playHeroVideos();
+    });
+    ['touchstart', 'pointerdown', 'click'].forEach((eventName) => {
+      window.addEventListener(eventName, playHeroVideos, { once: true, passive: true });
+    });
   };
 
   renderHeroVideoCarousel();
