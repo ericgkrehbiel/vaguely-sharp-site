@@ -130,46 +130,226 @@
   }
   .btn-secondary:hover { border-color: rgba(255,255,255,0.35); }
 
-  /* ── PROBLEM (dark) ── */
+  /* ── PROBLEM (dark editorial) ── */
   .problem {
-    background: var(--dark); padding: 96px 24px; text-align: center;
+    background: var(--dark);
+    padding: 118px 24px 76px;
+    position: relative;
+    overflow: hidden;
   }
-  .problem-inner { max-width: 720px; margin: 0 auto; }
+  .problem::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 76% 18%, rgba(255,154,139,0.14), transparent 28%),
+      radial-gradient(circle at 18% 82%, rgba(196,181,253,0.12), transparent 30%);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .problem-inner {
+    display: grid;
+    grid-template-columns: minmax(500px, 0.98fr) minmax(420px, 1.02fr);
+    align-items: center;
+    gap: clamp(56px, 6.5vw, 104px);
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .problem-copy { max-width: 650px; }
   
   .problem-intro {
     font-family: 'Michroma', sans-serif;
     font-size: clamp(1.19rem, 2.38vw, 1.78rem); font-weight: 400; letter-spacing: -0.03em;
-    line-height: 1.25; margin-bottom: 48px;
+    line-height: 1.25; margin-bottom: 44px;
   }
 
-  .problem-list { display: flex; flex-direction: row; justify-content: center; gap: 48px; margin-bottom: 48px; }
+  .problem-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-bottom: 48px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
   .problem-list li {
-    list-style: none; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 400; color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    font-size: clamp(1.02rem, 1.58vw, 1.26rem);
+    font-weight: 500;
+    color: rgba(255,255,255,0.66);
     letter-spacing: -0.01em;
+    line-height: 1.2;
+    min-height: 76px;
+    padding: 21px 18px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .problem-list li + li { border-left: 1px solid rgba(255,255,255,0.09); }
+
+  .problem-visuals {
+    min-height: clamp(420px, 44vw, 560px);
+    position: relative;
+  }
+  .problem-frame {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #101012;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 28px 76px rgba(0,0,0,0.34);
+  }
+  .problem-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.94) contrast(1.05);
+  }
+  .problem-frame-main {
+    width: 70%;
+    aspect-ratio: 4 / 5;
+    right: 3%;
+    top: 0;
+  }
+  .problem-frame-main img { object-position: 52% center; }
+  .problem-frame-secondary {
+    width: 49%;
+    aspect-ratio: 16 / 10;
+    left: 0;
+    top: 16%;
+    z-index: 2;
+  }
+  .problem-frame-secondary img { object-position: 42% center; }
+  .problem-frame-detail {
+    width: 42%;
+    aspect-ratio: 4 / 3;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+  }
+  .problem-frame-detail img { object-position: 50% center; }
+  .problem-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.28));
+    pointer-events: none;
   }
 
   .problem-turn {
-    font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 500; line-height: 1.6; color: var(--text-light);
-    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 40px; max-width: 520px; margin: 0 auto;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-light);
+    border-left: 1px solid rgba(196,181,253,0.42);
+    padding-left: 24px;
   }
+  .problem-turn-strong { color: var(--white); }
 
-  /* ── REFAME (gradient accent block) ── */
+  /* ── REFRAME (image statement block) ── */
   .reframe {
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 40%, #FF9A8B 100%);
-    padding: 68px 24px; text-align: center; position: relative;
+    min-height: 392px;
+    padding: 88px 24px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background: #111113;
   }
-  .reframe-inner { max-width: 90vw; margin: 0 auto; color: #2a1f2e; }
+  .reframe-picture,
+  .reframe-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .reframe-picture { display: block; }
+  .reframe-image {
+    object-fit: cover;
+    object-position: 42% center;
+    filter: saturate(0.8) contrast(1.04);
+    opacity: 0.52;
+    display: block;
+  }
+  .reframe::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(17,17,19,0.92), rgba(17,17,19,0.55) 48%, rgba(17,17,19,0.88)),
+      linear-gradient(180deg, rgba(17,17,19,0.24), rgba(17,17,19,0.9));
+    z-index: 1;
+  }
+  .reframe-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    color: var(--white);
+    position: relative;
+    z-index: 3;
+  }
   .reframe-inner p {
     font-family: 'Michroma', sans-serif;
-    font-size: clamp(1.21rem, 2.42vw, 1.81rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.35; }
+    font-size: clamp(1.21rem, 2.42vw, 1.81rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.35;
+    text-shadow: 0 18px 40px rgba(0,0,0,0.48);
+  }
+  .reframe-lead { margin-bottom: 32px; color: rgba(255,255,255,0.82); }
 
   /* ── BELIEF (dark) ── */
   .belief {
-    background: var(--dark); padding: 88px 24px; text-align: center;
+    background: var(--dark);
+    padding: 96px 24px 110px;
+    position: relative;
+    overflow: hidden;
   }
-  .belief-inner { max-width: 640px; margin: 0 auto; }
+  .belief-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(44px, 7vw, 88px);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
 
-  .belief-text { font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 500; line-height: 1.82; color: var(--text-light); }
+  .belief-visual {
+    height: clamp(300px, 32vw, 430px);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #101012;
+  }
+  .belief-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: saturate(0.88) contrast(1.04);
+  }
+  .belief-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.34)),
+      linear-gradient(90deg, rgba(196,181,253,0.1), rgba(255,154,139,0.08));
+    pointer-events: none;
+  }
+  .belief-text {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.82;
+    color: var(--text-light);
+    text-align: left;
+  }
   .belief-line { display: block; }
 
   /* ── PROOF / CASE STUDIES (dark-2) ── */
@@ -498,6 +678,12 @@
     .why-us-body, .proof-grid { grid-template-columns: 1fr; gap: 40px; }
     section { padding: 80px 20px !important; }
     .hero { padding-bottom: 150px !important; }
+    .problem-inner, .belief-inner { grid-template-columns: 1fr; }
+    .problem-copy { max-width: 680px; margin: 0 auto; text-align: center; }
+    .problem-turn { border-left: none; border-top: 1px solid rgba(196,181,253,0.34); padding-left: 0; padding-top: 32px; }
+    .problem-visuals { width: min(680px, 100%); margin: 0 auto; min-height: clamp(380px, 74vw, 520px); }
+    .belief-text { text-align: center; }
+    .belief-visual { width: min(640px, 100%); margin: 0 auto; order: 2; }
     .proof { padding: 40px 20px 80px !important; }
     .hero-clients { bottom: 32px; }
     .clients-logos { gap: 40px; }
@@ -522,12 +708,20 @@
   }
 
   @media (max-width: 768px) {
-    .problem-list { flex-direction: column; gap: 24px; }
+    .problem-list { grid-template-columns: 1fr; }
+    .problem-list li { min-height: 56px; padding: 18px; white-space: normal; }
+    .problem-list li + li { border-left: none; border-top: 1px solid rgba(255,255,255,0.09); }
     .hero-clients p { margin-bottom: 18px; }
     .clients-logos img { height: 28px; }
   }
   @media (max-width: 600px) {
     .hero-value h1 { font-size: clamp(1.275rem, 5.36vw, 1.53rem); }
+    .problem-visuals { min-height: 470px; }
+    .problem-frame-main { width: 82%; right: 0; }
+    .problem-frame-secondary { width: 58%; top: 26%; }
+    .problem-frame-detail { width: 54%; }
+    .reframe { min-height: 340px; }
+    .reframe-image { object-position: 35% center; }
     .case-overlay { padding: 16px; }
     .case-video-frame { width: min(52vw, 210px); }
     .case-content { padding: 30px 28px 26px; }
@@ -580,20 +774,37 @@
 <!-- PROBLEM -->
 <section class="problem" id="problem">
   <div class="problem-inner fade-up">
-    <p class="problem-intro">Everyone is making more content than ever before.</p>
-    <ul class="problem-list">
-      <li>More channels.</li>
-      <li>More posts.</li>
-      <li>More trends.</li>
-    </ul>
-    <p class="problem-turn">The hard part is knowing what worked,<br><span style="color:var(--white);">And what’s worth doing again.</span></p>
+    <div class="problem-copy">
+      <p class="problem-intro">Everyone is making more content than ever before.</p>
+      <ul class="problem-list">
+        <li>More channels.</li>
+        <li>More posts.</li>
+        <li>More trends.</li>
+      </ul>
+      <p class="problem-turn">The hard part is knowing what worked,<br><span class="problem-turn-strong">And what’s worth doing again.</span></p>
+    </div>
+    <div class="problem-visuals" aria-hidden="true">
+      <figure class="problem-frame problem-frame-main">
+        <img src="Homepage Assets/Visual Assets/Do4bGx7PgOMqcnDKF1cd2jZX6Q.avif" alt="">
+      </figure>
+      <figure class="problem-frame problem-frame-secondary">
+        <img src="Homepage Assets/Visual Assets/3FmNTMWd7zvBPop9IwInm3WOMVc.avif" alt="">
+      </figure>
+      <figure class="problem-frame problem-frame-detail">
+        <img src="Homepage Assets/Visual Assets/JGwwA6EvxJ0eVixrXHHKy6O9mbQ.avif" alt="">
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- REFAME -->
+<!-- REFRAME -->
 <section class="reframe" id="reframe">
+  <picture class="reframe-picture" aria-hidden="true">
+    <source media="(min-width: 901px)" srcset="Homepage%20Assets/Visual%20Assets/lDqPhqreSia3vqbLoALt3cgILI%20copy.jpg">
+    <img class="reframe-image" src="Homepage Assets/Visual Assets/lDqPhqreSia3vqbLoALt3cgILI.avif" alt="">
+  </picture>
   <div class="reframe-inner fade-up">
-    <p style="margin-bottom:32px;">Most brands don't have a content problem.</p>
+    <p class="reframe-lead">Most brands don't have a content problem.</p>
     <p>They have a discovery problem.</p>
   </div>
 </section>
@@ -601,6 +812,9 @@
 <!-- BELIEF -->
 <section class="belief" id="belief">
   <div class="belief-inner fade-up">
+    <div class="belief-visual" aria-hidden="true">
+      <img src="Homepage Assets/Visual Assets/NU8qczCbCnC7MrYy9B0z4TjXwo.avif" alt="">
+    </div>
     <div class="belief-text">
       <span class="belief-line">The strongest content is not just better produced.</span>
       <span class="belief-line">It has a scalable engine underneath it.</span>
