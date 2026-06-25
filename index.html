@@ -105,6 +105,7 @@
     height: calc(100% + 2px);
     border: 0;
     filter: saturate(0.92) contrast(1.08) brightness(0.76);
+    pointer-events: none;
   }
 
   .hero-video-bg::after {
@@ -1021,7 +1022,7 @@
   const heroVideoLinks = [
     'https://youtube.com/shorts/D71Nj8EOk00',
     'https://youtube.com/shorts/dv-LZwLpnfA',
-    'https://youtube.com/shorts/_doMUNvzTbw',
+    'https://youtube.com/shorts/Y0sL0zgJHSs',
     'https://youtube.com/shorts/jB6XqoqhIBE',
     'https://youtube.com/shorts/x2lM2EkwqUo',
     'https://youtube.com/shorts/CA1ELOmV4_k'
@@ -1047,7 +1048,9 @@
     if (!videoId) return '';
 
     const params = new URLSearchParams({
+      autohide: '1',
       autoplay: '1',
+      cc_load_policy: '0',
       controls: '0',
       disablekb: '1',
       fs: '0',
@@ -1057,7 +1060,8 @@
       mute: '1',
       playlist: videoId,
       playsinline: '1',
-      rel: '0'
+      rel: '0',
+      showinfo: '0'
     });
 
     return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
