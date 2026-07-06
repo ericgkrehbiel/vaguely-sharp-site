@@ -491,6 +491,26 @@
   }
   .proof-card:hover .proof-card-action,
   .proof-card:focus-visible .proof-card-action { color: var(--white); }
+  .proof-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-top: auto;
+    padding-top: 22px;
+  }
+  .proof-card-links .proof-card-action { margin-top: 0; padding-top: 0; }
+  .proof-card-link {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .proof-card-link:hover,
+  .proof-card-link:focus-visible,
+  .proof-card:hover .proof-card-link { color: var(--white); }
 
   /* ── CASE STUDY OVERLAY ── */
   body.case-modal-open { overflow: hidden; }
@@ -935,7 +955,10 @@
           <span class="proof-tag">Original Digital Series</span>
           <h3>Deconstructed with Frosty Preme</h3>
           <p>Our first original series, built specifically for an organic niche audience.</p>
-          <span class="proof-card-action">View case study</span>
+          <div class="proof-card-links">
+            <span class="proof-card-action">View case study</span>
+            <a class="proof-card-link" href="https://www.instagram.com/deconstructed.show/" target="_blank" rel="noopener noreferrer" data-card-link>Instagram</a>
+          </div>
         </div>
       </div>
 
@@ -1358,7 +1381,8 @@
       blurb: 'An original series hosted by Frosty Preme exploring the life and work of prominent designers in the NY custom fitted community.',
       embedSrc: 'https://www.youtube.com/embed/dv-LZwLpnfA?rel=0&playsinline=1',
       metrics: [
-        { value: '500+ assets', label: 'Across Season 1' }
+        { value: '500+ assets', label: 'Across Season 1' },
+        { value: '>260K impressions', label: 'Weekly' }
       ]
     },
     layton: {
@@ -1499,11 +1523,17 @@
   caseCards.forEach((card) => {
     card.addEventListener('click', () => openCaseStudy(card.dataset.caseStudy, card));
     card.addEventListener('keydown', (event) => {
+      if (event.target.closest('[data-card-link]')) return;
+
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         openCaseStudy(card.dataset.caseStudy, card);
       }
     });
+  });
+
+  document.querySelectorAll('[data-card-link]').forEach((link) => {
+    link.addEventListener('click', (event) => event.stopPropagation());
   });
 
   caseCloseControls.forEach((control) => {
