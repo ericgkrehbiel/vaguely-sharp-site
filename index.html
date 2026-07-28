@@ -420,11 +420,16 @@
   }
   .process-header {
     display: grid;
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+    align-items: center;
+    column-gap: clamp(44px, 6vw, 80px);
     margin-bottom: 56px;
     text-align: left;
+  }
+  .process-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
   .process-eyebrow {
     color: var(--accent);
@@ -448,6 +453,17 @@
     max-width: 650px;
   }
   .process-heading strong { color: var(--white); font-weight: 500; }
+  .process-image {
+    margin: 0;
+  }
+  .process-image img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
   .process-steps {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -839,7 +855,12 @@
     .problem-copy { max-width: 680px; margin: 0 auto; text-align: center; }
     .problem-turn { border-left: none; border-top: 1px solid rgba(196,181,253,0.34); padding-left: 0; padding-top: 32px; }
     .problem-visuals { width: min(680px, 100%); margin: 0 auto; min-height: clamp(380px, 74vw, 520px); }
-    .process-header { grid-template-columns: 1fr; gap: 20px; align-items: start; }
+    .process-header {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .process-image { display: none; }
     .proof { padding: 40px 20px 80px !important; }
     .hero-clients { bottom: 32px; }
     .clients-logos { gap: 40px; }
@@ -980,11 +1001,16 @@
 <section class="process" id="process">
   <div class="process-inner fade-up">
     <div class="process-header">
-      <p class="process-eyebrow">How an engagement begins</p>
-      <div class="process-heading">
-        <h2>How a sprint works.</h2>
-        <p>Every engagement starts with one focused question: <strong>what should this brand repeat?</strong></p>
+      <div class="process-copy">
+        <p class="process-eyebrow">How an engagement begins</p>
+        <div class="process-heading">
+          <h2>How a sprint works.</h2>
+          <p>Every engagement starts with one focused question: <strong>what should this brand repeat?</strong></p>
+        </div>
       </div>
+      <figure class="process-image">
+        <img src="Homepage Assets/Visual Assets/layton-cream-jacket-homepage.jpg" alt="Layton Lamell in a cream jacket on a New York street">
+      </figure>
     </div>
     <div class="process-steps">
       <article class="process-step">
