@@ -7,8 +7,16 @@ const signalSlice = document.querySelector('.signal-slice');
 const cursor = document.querySelector('.cursor');
 const cursorTip = document.querySelector('.crosshair--tip');
 const cursorGhost = document.querySelector('.crosshair--ghost');
+const favicon = document.querySelector('link[rel="icon"]');
+const stillFavicon = favicon.href;
+const faviconStrip = new Image();
+const faviconCanvas = document.createElement('canvas');
+const faviconContext = faviconCanvas.getContext('2d');
+const faviconFrames = [];
 
 let flickerTimer;
+let faviconTimer;
+let faviconFrame = 0;
 let cursorFrame;
 let previousFrameTime;
 let pointerX = 0;
@@ -78,6 +86,37 @@ function hideCursor() {
   document.documentElement.classList.remove('has-custom-cursor');
 }
 
+function advanceFavicon() {
+  const size = faviconCanvas.width;
+  faviconFrame = (faviconFrame + 1) % (faviconStrip.naturalWidth / size);
+
+  // Updating the link lets the globe rotate in browsers with static GIF favicons.
+  if (!faviconFrames[faviconFrame]) {
+    faviconContext.clearRect(0, 0, size, size);
+    faviconContext.drawImage(faviconStrip, faviconFrame * size, 0, size, size, 0, 0, size, size);
+    faviconFrames[faviconFrame] = faviconCanvas.toDataURL();
+  }
+  favicon.href = faviconFrames[faviconFrame];
+}
+
+function syncFavicon() {
+  if (!motionEffects.matches || document.hidden) {
+    clearInterval(faviconTimer);
+    faviconTimer = undefined;
+    faviconFrame = 0;
+    if (favicon.href !== stillFavicon) favicon.href = stillFavicon;
+    return;
+  }
+
+  if (!faviconContext) return;
+  if (!faviconStrip.hasAttribute('src')) {
+    faviconStrip.src = new URL('globe-favicon-frames.webp', stillFavicon).href;
+  }
+  if (faviconFrames.length && faviconTimer === undefined) {
+    faviconTimer = setInterval(advanceFavicon, 120);
+  }
+}
+
 function syncEffects() {
   clearTimeout(flickerTimer);
   wordmark.classList.remove('is-flickering');
@@ -89,8 +128,15 @@ function syncEffects() {
   if (!desktopCursor.matches || document.hidden) {
     hideCursor();
   }
+
+  syncFavicon();
 }
 
+faviconStrip.addEventListener('load', () => {
+  faviconCanvas.width = faviconCanvas.height = faviconStrip.naturalHeight;
+  faviconFrames[0] = stillFavicon;
+  syncFavicon();
+});
 signalSlice.addEventListener('animationend', (event) => {
   if (event.target === signalSlice) wordmark.classList.remove('is-flickering');
 });
