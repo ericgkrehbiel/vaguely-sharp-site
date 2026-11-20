@@ -1,0 +1,250 @@
+:root {
+  color-scheme: dark;
+  background: #000;
+  color: #fff;
+  font-family: Michroma, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.landing {
+  --wordmark-lift: 1.5rem;
+  display: grid;
+  grid-template-rows: minmax(var(--wordmark-lift), 1fr) auto minmax(min-content, 1fr);
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  overflow: clip;
+}
+
+.wordmark {
+  grid-row: 2;
+  position: relative;
+  inset-block-start: calc(-1 * var(--wordmark-lift));
+  /* Allow for the PNG's transparent padding so the visible mark spans 60vw. */
+  width: min(63.81vw, 320svh);
+  max-width: calc(100% - 3rem);
+  margin: 0;
+}
+
+.wordmark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.landing-details {
+  grid-row: 3;
+  place-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact {
+  margin: calc(clamp(0.75rem, 2.4vh, 1.5rem) + 1rem) 1rem 1.5rem;
+  color: rgb(255 255 255 / 76%);
+  font-style: normal;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.contact p {
+  margin: 0;
+}
+
+.contact p + p {
+  margin-block-start: 3.5rem;
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  margin: auto 1rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.landing a {
+  color: #fff;
+  text-decoration-color: rgb(255 255 255 / 50%);
+  text-underline-offset: 0.2em;
+}
+
+.landing a:is(:hover, :focus-visible) {
+  text-decoration-color: currentColor;
+}
+
+.landing a:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+.signal-slice,
+.signal-band {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.signal-slice {
+  inset: 0;
+  clip-path: inset(var(--signal-top, 38%) 0 calc(100% - var(--signal-top, 38%) - var(--signal-height, 5%)));
+  background: #000;
+}
+
+.signal-slice img {
+  transform: translateX(var(--signal-shift, 18px));
+}
+
+.signal-band {
+  inset: var(--signal-top, 38%) auto auto 50%;
+  width: 100vw;
+  height: var(--signal-height, 5%);
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgb(255 255 255 / 16%), rgb(255 255 255 / 4%) 20%, transparent 75%);
+}
+
+.crt {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.crt::before,
+.crt::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.crt::before {
+  inset: -64px;
+  background: url("assets/crt-grain.png") 0 0 / 384px 384px;
+  image-rendering: pixelated;
+  opacity: 0.43875;
+}
+
+.crt__roll {
+  display: none;
+  position: absolute;
+  inset: -32% 0 auto;
+  height: 32%;
+  background: linear-gradient(
+    180deg,
+    transparent 8%,
+    rgb(255 255 255 / 3%) 45%,
+    rgb(255 255 255 / 9%) 68%,
+    rgb(255 255 255 / 12%) 70%,
+    rgb(0 0 0 / 18%) 73%,
+    transparent 100%
+  );
+}
+
+.crt::after {
+  background:
+    repeating-linear-gradient(0deg, rgb(0 0 0 / 24%) 0 1px, transparent 2px 4px),
+    radial-gradient(
+      ellipse at center,
+      transparent 46%,
+      rgb(0 0 0 / 20%) 64%,
+      rgb(0 0 0 / 48%) 82%,
+      rgb(0 0 0 / 76%) 100%
+    );
+}
+
+.cursor {
+  position: fixed;
+  z-index: 21;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.crosshair {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  background:
+    linear-gradient(currentColor, currentColor) center top / 1px 5px no-repeat,
+    linear-gradient(currentColor, currentColor) center bottom / 1px 5px no-repeat,
+    linear-gradient(currentColor, currentColor) left center / 5px 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / 5px 1px no-repeat;
+}
+
+.crosshair--ghost {
+  opacity: 0;
+}
+
+.cursor.is-trailing .crosshair--ghost {
+  opacity: 0.4;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :root.has-custom-cursor,
+  :root.has-custom-cursor .landing a {
+    cursor: none;
+  }
+
+  .crt::before {
+    animation: crt-snow 600ms steps(1, end) infinite;
+  }
+
+  .crt__roll {
+    display: block;
+    animation: crt-roll 6.8s linear infinite;
+  }
+
+  .wordmark.is-flickering {
+    --signal-timing: 230ms steps(1, end);
+  }
+
+  .wordmark.is-flickering :is(.signal-slice, .signal-band) {
+    visibility: visible;
+    animation: signal-flicker var(--signal-timing);
+  }
+
+  .wordmark.is-flickering .signal-slice img {
+    animation: signal-tear var(--signal-timing);
+  }
+}
+
+@keyframes crt-snow {
+  0% { transform: translate3d(0, 0, 0); }
+  10% { transform: translate3d(-31px, 18px, 0); }
+  20% { transform: translate3d(54px, -15px, 0); }
+  30% { transform: translate3d(-12px, -49px, 0); }
+  40% { transform: translate3d(23px, 39px, 0); }
+  50% { transform: translate3d(42px, -30px, 0); }
+  60% { transform: translate3d(-48px, 3px, 0); }
+  70% { transform: translate3d(11px, 28px, 0); }
+  80% { transform: translate3d(-22px, 51px, 0); }
+  90% { transform: translate3d(36px, 12px, 0); }
+}
+
+@keyframes crt-roll {
+  to { transform: translate3d(0, 415%, 0); }
+}
+
+@keyframes signal-flicker {
+  0% { opacity: 0.96; }
+  32% { opacity: 0; }
+  48% { opacity: 0.85; }
+  84% { opacity: 0; }
+}
+
+@keyframes signal-tear {
+  48%, 100% { transform: translateX(calc(var(--signal-shift, 18px) * -0.55)); }
+}
