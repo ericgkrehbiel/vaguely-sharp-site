@@ -1,4 +1,5 @@
-const desktopEffects = matchMedia(
+const motionEffects = matchMedia('(prefers-reduced-motion: no-preference)');
+const desktopCursor = matchMedia(
   '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
 );
 const wordmark = document.querySelector('.wordmark');
@@ -52,7 +53,7 @@ function updateCursor(time) {
 }
 
 function moveCursor(event) {
-  if (!desktopEffects.matches || document.hidden || event.pointerType !== 'mouse') return;
+  if (!desktopCursor.matches || document.hidden || event.pointerType !== 'mouse') return;
 
   pointerX = event.clientX;
   pointerY = event.clientY;
@@ -81,9 +82,11 @@ function syncEffects() {
   clearTimeout(flickerTimer);
   wordmark.classList.remove('is-flickering');
 
-  if (desktopEffects.matches && !document.hidden) {
+  if (motionEffects.matches && !document.hidden) {
     scheduleFlicker(800, 1500);
-  } else {
+  }
+
+  if (!desktopCursor.matches || document.hidden) {
     hideCursor();
   }
 }
@@ -95,5 +98,6 @@ document.addEventListener('visibilitychange', syncEffects);
 document.documentElement.addEventListener('pointerleave', hideCursor);
 window.addEventListener('pointermove', moveCursor, { passive: true });
 window.addEventListener('blur', hideCursor);
-desktopEffects.addEventListener('change', syncEffects);
+motionEffects.addEventListener('change', syncEffects);
+desktopCursor.addEventListener('change', hideCursor);
 syncEffects();

@@ -71,6 +71,43 @@ body {
   text-transform: uppercase;
 }
 
+.social-links svg {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .landing {
+    --wordmark-lift: 3rem;
+  }
+
+  .wordmark {
+    width: 76vw;
+  }
+
+  .social-links {
+    flex-wrap: nowrap;
+    gap: 1rem;
+    margin-block-end: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .social-links a {
+    display: grid;
+    min-width: 44px;
+    min-height: 44px;
+    place-items: center;
+  }
+
+  .social-links span {
+    display: none;
+  }
+
+  .social-links svg {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 .landing a {
   color: #fff;
   text-decoration-color: rgb(255 255 255 / 50%);
@@ -198,13 +235,15 @@ body {
     cursor: none;
   }
 
-  .crt::before {
-    animation: crt-snow 600ms steps(1, end) infinite;
-  }
-
   .crt__roll {
     display: block;
     animation: crt-roll 6.8s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .crt::before {
+    animation: crt-snow 600ms steps(1, end) infinite;
   }
 
   .wordmark.is-flickering {
